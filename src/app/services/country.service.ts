@@ -41,7 +41,7 @@ export class CountryService {
     }
 
 
-    bindCountriesRegionsPrefix() {
+    bindCountriesRegionsPrefix(): Observable<any> {
 
         console.log(this.geoAPI_URL);
         return this.http.get<ResponseCountry<Country>>(this.geoAPI_URL, this.httpOptions)
@@ -49,22 +49,22 @@ export class CountryService {
                 if (c.success) {
                     console.log('FROM bindCountriesRegionsPrefix --> ', c.response);
                     const countries = [...c.response];
-                    console.log('-->countries--inside serv', countries);
+                    console.log('-->countries--inside serv', [...c.response]);
 
                     //emit countries
-                    this.setCountriesData(countries);
+                    this.setCountriesData([...c.response]);
+                    // this.userService.setUserData(response.data.affiliate);
 
                 } else {
                     console.log(c.errors);
                 }
 
             })
-            )
-            .subscribe();
+            );
     }
 
-    setCountriesData(country: Country[]) {
-        this.countriesData.next(country);
+    setCountriesData(countries: Country[]) {
+        this.countriesData.next(countries);
     }
     getCountriesDataValue(): Country[] {
         return this.countriesData.getValue();

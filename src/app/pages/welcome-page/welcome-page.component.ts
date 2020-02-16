@@ -36,6 +36,10 @@ export class WelcomePageComponent implements OnInit {
   prefixCountry = '  ';
   prefixCountryInvoice = '';
 
+  // TODO:  FIXME:
+  countriesDataService: Country[] = [];
+  regionsDataService: Region[] = [];
+
   private readonly prefixWidth = 38;
 
   constructor(private userService: UserService<Affiliate>,
@@ -46,6 +50,8 @@ export class WelcomePageComponent implements OnInit {
 
   ngOnInit() {
 
+    this.affiliate = this.userService.getUserValue();
+    console.log('welcome->', this.affiliate);
 
     this.countryService.getCountries()
 
@@ -65,8 +71,14 @@ export class WelcomePageComponent implements OnInit {
 
       });
 
-    this.affiliate = this.userService.getUserValue();
-    console.log('welcome->', this.affiliate);
+
+    this.countriesDataService = this.countryService.bindCountriesRegionsPrefix().subscribe(
+      res => {
+
+        console.log('countriesDataService --->', this.countriesDataService);
+      }
+    );
+
 
     this.initWelcomeForm();
 

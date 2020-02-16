@@ -20,7 +20,7 @@ export class Country {
  tld: string;
  isoNumericCode: number;
  defaultLanguageId: number;
- region: Region[];
+ regions: Region[];
 
 }
 
