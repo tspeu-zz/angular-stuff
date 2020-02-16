@@ -1,0 +1,92 @@
+
+<div class="card welcome-card-form z-depth-2 ">
+
+    <div class="card-header text-center">  
+        <i class="far fa-user"></i>
+        <h4> Datos personales</h4>
+    </div>
+    
+<!-- row<div class="d-flex justify-content-center  align-items-center"> -->
+
+
+    <div class="card-body mx-2 d-flex justify-content-center align-items-center ">
+        <form class="text-center"
+        [formGroup]="welcomeForm" (ngSubmit)="onSubmit()">
+            
+            <input type="text" id="name" placeholder="* Nombre" 
+                class="form-control mb-3" 
+                formControlName="name" required>
+
+            <input type="text" id="surname" placeholder="* Apellidos" 
+                class="form-control mb-3" 
+                formControlName="surname" required>
+
+            <input type="text" id="dni" placeholder="* DNI/NIE" 
+            class="form-control mb-3" 
+            formControlName="dni" required>
+            
+            <input type="text" id="address" placeholder="* Dirección" 
+            class="form-control mb-3" 
+            formControlName="address" required>
+            
+            <div class="form-row mb-3">
+                <div class="col">
+                    <input type="text" id="countryCode" placeholder="* País" class="form-control" 
+                    formControlName="countryCode" required>
+                    
+                </div>
+                <div class="col">
+                    <input type="text" id="regionCode" placeholder="* Provincia" class="form-control" 
+                    formControlName="regionCode" required>
+                    <!-- [ngClass]="{'is-invalid': registerControl.surName.touched &&  registerControl.surName.errors,
+                        'is-valid': registerControl.surName.touched &&  !registerControl.surName.errors  }"> -->
+                </div>
+            </div>
+                
+                <div class="form-row mb-2">
+                    <div class="col">
+                        <input type="text" id="postalCode" placeholder="Código Postal" class="form-control" 
+                        formControlName="postalCode">
+                        <!-- [ngClass]="{'is-invalid': registerControl.name.touched &&  registerControl.name.errors,
+                            'is-valid': registerControl.name.touched &&  !registerControl.name.errors }"> -->
+                    </div>
+                        <span class="prefix-mumber">+34</span>
+                    <div class="col">
+                            <input type="text" id="phone" placeholder="* Telefono" class="form-control" 
+                            formControlName="phone" required>
+                            <!-- [ngClass]="{'is-invalid': registerControl.surName.touched &&  registerControl.surName.errors,
+                                'is-valid': registerControl.surName.touched &&  !registerControl.surName.errors  }"> -->
+                    </div>
+                </div>
+                        
+                <div class="line-separation"></div>
+                        
+                <span class="text-center mb-4 text-size-info"> * Campos obligatorios: </span>
+                
+                <div class="d-flex mt-3 mb-4 text-size-info">
+                    <a href="#" class="text-size-info">Política de privacidad y uso de datos:</a>
+                    
+                    <div class="ml-3">
+                        <label for="acccept">* He leido y acepto</label>
+                        <input type="checkbox" id="acccept" class="ml-2" 
+                        formControlName="acccept" required>
+                    </div>
+                </div>
+                        
+                <button class="btn mb-4 btn-block waves-effect" type="submit"
+                        [disabled]="!welcomeForm.valid"> Continuar
+                </button> 
+            
+                <p> {{ welcomeForm.value  | json}}</p>
+
+        </form>
+
+    </div>
+<!-- </div> -->
+
+
+</div>
+        
+        
+
+

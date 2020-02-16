@@ -1,0 +1,53 @@
+@import 'node_modules/angular-bootstrap-md/assets/scss/core/colors';
+@import 'node_modules/angular-bootstrap-md/assets/scss/bootstrap/functions';
+@import 'node_modules/angular-bootstrap-md/assets/scss/bootstrap/variables';
+@import 'node_modules/angular-bootstrap-md/assets/scss/core/mixins';
+
+.external-layout {
+  background: $nav-blue;
+  background: -moz-linear-gradient(-45deg, $nav-blue 0%, $nav-blue 29%, #06335e 30%, #03294d 43%, #03294d 45%, #03294d 48%, #065294 49%, $nav-blue 72%, $nav-blue 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, $nav-blue), color-stop(29%, $nav-blue), color-stop(30%, #06335e), color-stop(43%, #03294d), color-stop(45%, #03294d), color-stop(48%, #03294d), color-stop(49%, #065294), color-stop(72%, $nav-blue), color-stop(100%, $nav-blue));
+  background: -webkit-linear-gradient(-45deg, $nav-blue 0%, $nav-blue 29%, #06335e 30%, #03294d 43%, #03294d 45%, #03294d 48%, #065294 49%, $nav-blue 72%, $nav-blue 100%);
+  background: -o-linear-gradient(-45deg, $nav-blue 0%, $nav-blue 29%, #06335e 30%, #03294d 43%, #03294d 45%, #03294d 48%, #065294 49%, $nav-blue 72%, $nav-blue 100%);
+  background: -ms-linear-gradient(-45deg, $nav-blue 0%, $nav-blue 29%, #06335e 30%, #03294d 43%, #03294d 45%, #03294d 48%, #065294 49%, $nav-blue 72%, $nav-blue 100%);
+  background: linear-gradient(135deg, $nav-blue 0%, $nav-blue 29%, #06335e 30%, #03294d 43%, #03294d 45%, #03294d 48%, #065294 49%, $nav-blue 72%, $nav-blue 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$nav-blue', endColorstr='$nav-blue', GradientType=1 );
+
+  min-height: 100%;
+
+  .title-section {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    @include media-breakpoint-down(md) {
+      justify-content: center !important;
+    }
+
+    .title {
+      font-size: 1.8rem;
+      @include media-breakpoint-up(md) {
+        font-size: 2rem;
+        padding: 0 50px;
+      }
+    }
+  }
+
+  .content-section {
+    display: flex;
+    justify-content: center;
+    .content {
+      width: 500px;
+    }
+  }
+
+  .footer-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+
+    .logo {
+      max-width: 180px;
+    }
+  }
+}
