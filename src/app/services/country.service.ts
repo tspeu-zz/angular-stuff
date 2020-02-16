@@ -121,44 +121,44 @@ export class CountryService {
     // }
 
 
-    getCountryAll(): Observable<ResponseCountry<Country>> {
+    // getCountryAll(): Observable<ResponseCountry<Country>> {
 
-        return this.http.get<ResponseCountry<Country>>(this.geoApiUrl_TEST, this.httpOptions);
-    }
-    getPaisesAll(): Observable<ResponseCountry<Country>> {
+    //     return this.http.get<ResponseCountry<Country>>(this.geoApiUrl_TEST, this.httpOptions);
+    // }
+    // getPaisesAll(): Observable<ResponseCountry<Country>> {
 
-        return this.http.get<ResponseCountry<Country>>('https://restcountries.eu/rest/v2/all', this.httpOptions);
-    }
+    //     return this.http.get<ResponseCountry<Country>>('https://restcountries.eu/rest/v2/all', this.httpOptions);
+    // }
 
-    getLocalJson() {
+    // getLocalJson() {
 
-        return this.http.get('assets/countries.json');
-    }
+    //     return this.http.get('assets/countries.json');
+    // }
 
-    getAllPaises() {
-        return this.paises = [
-            {
-                "name": "España",
-                "id": 68,
-                "phone": "34"
-            },
-            {
-                "name": "Mexico",
-                "id": 69,
-                "phone": "55"
-            },
-            {
-                "name": "Argentina",
-                "id": 70,
-                "phone": "54"
-            },
-            {
-                "name": "Perú",
-                "id": 71,
-                "phone": "56"
-            }
-        ];
-    }
+    // getAllPaises() {
+    //     return this.paises = [
+    //         {
+    //             "name": "España",
+    //             "id": 68,
+    //             "phone": "34"
+    //         },
+    //         {
+    //             "name": "Mexico",
+    //             "id": 69,
+    //             "phone": "55"
+    //         },
+    //         {
+    //             "name": "Argentina",
+    //             "id": 70,
+    //             "phone": "54"
+    //         },
+    //         {
+    //             "name": "Perú",
+    //             "id": 71,
+    //             "phone": "56"
+    //         }
+    //     ];
+    // }
 
 
 }

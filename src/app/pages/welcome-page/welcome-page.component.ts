@@ -8,8 +8,9 @@ import { InvoiceData } from 'src/app/models/invoice-data';
 import { CountryService } from 'src/app/services/country.service';
 import { Country } from 'src/app/models/Country';
 import { map } from 'rxjs/operators';
+import { Region } from 'src/app/models/Region';
 /////
-import * as data from './countries.json';
+// import * as data from './countries.json';
 
 @Component({
   selector: 'app-welcome-page',
@@ -26,11 +27,15 @@ export class WelcomePageComponent implements OnInit {
   affiliateInvoiceData: InvoiceData = new InvoiceData();
   showInvoiceDataForm = false;
   countries: Country[] = [];
-  country: any = {};
-  regions: any = [];
-  countriesData = {};
-  regionsData = [];
+  countriesInvoice: Country[] = [];
+  regions: Region[] = [];
+  regionsInvoice: Region[] = [];
+  // country: any = {};
+  // countriesData = {};
+  // regionsData = [];
   prefixCountry = '  ';
+  prefixCountryInvoice = '';
+
   private readonly prefixWidth = 38;
 
   constructor(private userService: UserService<Affiliate>,
@@ -51,6 +56,7 @@ export class WelcomePageComponent implements OnInit {
         // console.log('data', data);
         // console.log('datos', datos);
         this.countries = [...res.response];
+        this.countriesInvoice = this.countries;
         console.log('countries ---', this.countries);
 
         // this.countries = data.country;
@@ -58,40 +64,6 @@ export class WelcomePageComponent implements OnInit {
         // console.log('regions', this.regions);
 
       });
-
-    // this.countryService.getAllPaises();
-
-    // this.countryService.getCountry()
-    //   .pipe(
-    //     map(res => {
-    //       if (res.success) {
-    //         console.log('--> res -> ', res);
-    //         this.countriesData = { ...res.response.country };
-    //         console.log('--> this.countriesData  -> ', this.countriesData);
-    //         this.regionsData = [...this.countriesData.regions];
-    //         console.log('--> this.regionsData  -> ', this.regionsData);
-
-    //       } else {
-
-    //       }
-    //     })
-    //   ).subscribe(
-    //     res => {
-    //       console.log('-------> res subscribe', res);
-    //     }
-    //   );
-
-    //     this.countryService.getCountry()
-    //       .subscribe( res => {
-    //         console.log(res);
-    //         let response = res;
-    //         this.Countries = res;
-    //         this.country =  JSON.stringify(this.Countries.response.country);
-    //         this.regions =  JSON.stringify(this.Countries.response.country.regions);
-    //         console.log('RES--COUNTRY-RESPONSE --> ' , JSON.stringify(this.Countries.response.country.name));
-    //         console.log('RES--COUNTRY-RESPONSE --> ' ,  this.regions);
-    // /** COUNTRY id -> region country ID */
-    // });
 
     this.affiliate = this.userService.getUserValue();
     console.log('welcome->', this.affiliate);
@@ -103,6 +75,8 @@ export class WelcomePageComponent implements OnInit {
     this.onChangesCheck();
 
     this.onChangeCountry();
+
+    this.onChangeCountryInvoice();
   }
 
 
@@ -155,11 +129,11 @@ export class WelcomePageComponent implements OnInit {
 
   setAffilitePersonalData() {
     const countryData = this.welcomeForm.get('countryCode').value;
-    const arrayCountry = countryData.split(',');
+    const country = countryData.split(',');
     return this.personalData = {
       dni: this.welcomeForm.get('dni').value,
       address: this.welcomeForm.get('address').value,
-      countryCode: arrayCountry[4],
+      countryCode: country[4],
       regionCode: this.welcomeForm.get('regionCode').value,
       postalCode: this.welcomeForm.get('postalCode').value,
       phone: this.welcomeForm.get('phone').value,
@@ -196,16 +170,15 @@ export class WelcomePageComponent implements OnInit {
         // console.log('countries', this.countries[index].regions);
         // console.log('onFilterCountry->', this.onFilterCountry(index));
         this.onFilterCountry(index);
-        // this.regions = this.onFilterCountry(index, idCountry);
         console.log(this.regions);
-        console.log('onfilterCountryByID', this.onfilterCountryByID(idCountry));
+        // console.log('onfilterCountryByID', this.onfilterCountryByID(idCountry));
 
 
       });
   }
 
   onFilterCountry(index: number) {
-    // return this.regions = this.countries[index].regions;
+    return this.regions = this.countries[index].regions;
 
   }
 
@@ -262,12 +235,14 @@ export class WelcomePageComponent implements OnInit {
   }
 
   setAffiliateInvoiceData() {
+    const countryDataInvoice = this.invoiceForm.get('invoiceCountryCode').value;
+    const country = countryDataInvoice.split(',');
     return this.affiliateInvoiceData = {
       companyType: Number(this.invoiceForm.get('companyType').value),
       companyName: this.invoiceForm.get('companyName').value,
       cif: this.invoiceForm.get('cif').value,
       address: this.invoiceForm.get('invoiceAddress').value,
-      countryCode: this.invoiceForm.get('invoiceCountryCode').value,
+      countryCode: country[4],
       regionCode: this.invoiceForm.get('invoiceRegionCode').value,
       postalCode: this.invoiceForm.get('invoicePostalCode').value,
       phone: this.invoiceForm.get('invoicePhone').value,
@@ -277,7 +252,7 @@ export class WelcomePageComponent implements OnInit {
   }
 
   bindPersonalDataToInvoice() {
-
+    this.prefixCountryInvoice = this.prefixCountry;
     this.invoiceForm.patchValue({
       cif: this.welcomeForm.get('dni').value,
       invoiceAddress: this.welcomeForm.get('address').value,
@@ -289,9 +264,41 @@ export class WelcomePageComponent implements OnInit {
   }
 
 
+  onChangeCountryInvoice() {
+    this.invoiceForm.get('invoiceCountryCode').valueChanges
+      .subscribe(value => {
+        console.log('onChangeCountryInoice---->', value);
+        const data = value;
+        console.log('--->-------  ', data);
+        const dataCountry = data.split(',');
+        this.prefixCountryInvoice = dataCountry[2];
+        let index = Number(dataCountry[3]);
+        console.log('----*****> ', this.countriesInvoice[index]);
+        this.regionsInvoice = this.countriesInvoice[index].regions;
+      });
+
+    /*
+     onFilterCountry(index: number) {
+        return this.regions = this.countries[index].regions;
+    
+      }
+     console.log(value);
+            let arrayValue = value.split(',');
+            console.log(arrayValue);
+            this.prefixCountry = arrayValue[2];
+            console.log('this.prefixCountry', this.prefixCountry);
+            let idCountry = Number(arrayValue[1]);
+            let index = Number(arrayValue[3]);
+            console.log(idCountry);
+            console.log(index);
+            // console.log('countries', this.countries[index].regions);
+            // console.log('onFilterCountry->', this.onFilterCountry(index));
+            this.onFilterCountry(index);
+            console.log(this.regions);
+            console.log('onfilterCountryByID', this.onfilterCountryByID(idCountry)); */
+  }
+
 }
-
-
  // this.countryService.getLocalJson()
     //   .subscribe(data => {
 

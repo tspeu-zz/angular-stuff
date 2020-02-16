@@ -52,7 +52,6 @@
                     <select class="browser-default custom-select" formControlName="countryCode" required
                         [ngClass]="{'is-invalid': welcomeControl.countryCode.touched &&  welcomeControl.countryCode.errors,
                         'is-valid': welcomeControl.countryCode.touched &&  !welcomeControl.countryCode.errors }">
-                        <!-- <option>Seleccionar una opción</option> -->
                         <option [value]="[c.isoCode,c.id,c.phone, index,c.name]" *ngFor="let c of countries; let index = index" #indexC>{{c.name}}</option>
                 
                     </select>
@@ -62,7 +61,6 @@
                     <select class="browser-default custom-select" formControlName="regionCode" required
                         [ngClass]="{'is-invalid': welcomeControl.regionCode.touched &&  welcomeControl.regionCode.errors,
                                     'is-valid': welcomeControl.regionCode.touched &&  !welcomeControl.regionCode.errors }">
-                        <!-- <option>Seleccionar una opción</option> -->
                         <option [value]="regions[i].name" *ngFor="let r of regions; let i =index">{{r.name}}</option>
 
                     </select>
@@ -77,7 +75,7 @@
                                         'is-valid': welcomeControl.postalCode.touched && !welcomeControl.postalCode.errors }">
                         
                     </div>
-                        <span class="prefix-mumber" [style.min-width.px]="prefixWidth">+{{prefixCountry}}</span>
+                        <span class="prefix-mumber" [style.min-width.px]="prefixWidth">{{prefixCountry}}</span>
                     <div class="col">
                             <input type="text" id="phone" placeholder="* Telefono" class="form-control" 
                                 formControlName="phone" required
@@ -173,23 +171,19 @@
                     <select class="browser-default custom-select" formControlName="invoiceCountryCode" required
                         [ngClass]="{'is-invalid': invoiceControl.invoiceCountryCode.touched &&  invoiceControl.invoiceCountryCode.errors,
                         'is-valid': invoiceControl.invoiceCountryCode.touched &&  !invoiceControl.invoiceCountryCode.errors }">
-                        <!-- <option>Seleccionar una opción</option> -->
-                        <option value="ES">España</option>
-                        <option value="MX">México</option>
-                        <option value="AR">Argentina</option>
+                        <option [value]="[c.isoCode,c.id,c.phone, index,c.name]" *ngFor="let c of countriesInvoice; let index = index">{{c.name}}</option>
                     </select>
+
                     
                 </div>
                 <div class="col">
                     <select class="browser-default custom-select" formControlName="invoiceRegionCode" required
                         [ngClass]="{'is-invalid': invoiceControl.invoiceRegionCode.touched &&  invoiceControl.invoiceRegionCode.errors,
-                                    'is-valid': invoiceControl.invoiceRegionCode.touched &&  !invoiceControl.invoiceRegionCode.errors }">
-                        <!-- <option>Seleccionar una opción</option> -->
-                        <option value="ES">España</option>
-                        <option value="MX">México</option>
-                        <option value="AR">Argentina</option>
+                        'is-valid': invoiceControl.invoiceRegionCode.touched &&  !invoiceControl.invoiceRegionCode.errors }">
+                        <option [value]="regionsInvoice[i].name" *ngFor="let r of regionsInvoice; let i =index">{{r.name}}</option>                   
                     </select>
-                </div>
+
+                    </div>
             </div>
                 
             <div class="form-row mb-2">
@@ -200,18 +194,13 @@
                                     'is-valid': invoiceControl.invoicePostalCode.touched && !invoiceControl.invoicePostalCode.errors }">
                     
                 </div>
-                <p class="prefix-mumber">+34</p> 
+                <span class="prefix-mumber" [style.min-width.px]="prefixWidth">{{prefixCountryInvoice}}</span>
+
                 <div class="col">
-                    <!-- <div class="row"> -->
-                    <!-- <div class="col">  -->
-                        <!-- </div>
-                        <div class="col-8">  -->
                             <input type="text" id="invoicePhone" placeholder="* Telefono" class="form-control" 
                             formControlName="invoicePhone" required
                             [ngClass]="{'is-invalid': invoiceControl.invoicePhone.touched &&  invoiceControl.invoicePhone.errors,
                             'is-valid': invoiceControl.invoicePhone.touched &&  !invoiceControl.invoicePhone.errors }">
-                        <!-- </div> -->
-                    <!-- </div> -->
                 </div>
             </div>
                     
