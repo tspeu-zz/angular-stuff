@@ -1,0 +1,14 @@
+<div class="external-card-layout card card-session text-center z-depth-2">
+    <div class="card-header card-bg-header"> 
+        <h2 *ngIf="title; else logo" 
+            class="text-card-header">
+            {{title}}
+        </h2>
+        <ng-template #logo>
+            <img class="header-logo" [src]="logoImage">
+        </ng-template>
+    </div>
+    <div class="card-body">
+        <ng-content> </ng-content>
+    </div> 
+</div>

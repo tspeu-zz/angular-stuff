@@ -1,0 +1,40 @@
+<app-external-layout [config]="externalLayoutConfig">
+
+   <app-external-card [title]="titleCard" >
+      <div class="card-external">
+
+         <div class="spinner" *ngIf="isLoading; else contentLoaded">
+            <div class="spinner-border" role="status" >
+               <span class="sr-only">Loading...</span>
+            </div>
+         </div>
+
+         <ng-template #contentLoaded>
+            <div class="text-center main-content">
+               <img [src]="cardContent.image" alt="" class="card-image">
+               <h3 class="text-link main-message" *ngIf="cardContent.mainMessage">
+                  {{ cardContent.mainMessage }}
+               </h3>
+            </div>
+
+            <h4 class="text-left secondary-message" *ngIf="cardContent.secondaryMessage">
+              {{ cardContent.secondaryMessage }}
+            </h4>
+
+            <div class="text-left description-message"
+                 *ngIf="cardContent.descriptionMessage"
+                 [innerHTML]="cardContent.descriptionMessage"></div>
+
+            <div class="card-options" *ngIf="cardContent.buttonLabel"
+                 [style.justifyContent]="cardContent.isErrorCard ? 'center' : 'left'">
+               <a class="redirect-to" *ngIf="!cardContent.isErrorCard; else errorButton" [routerLink]="['/login']"> {{ cardContent.buttonLabel }} </a>
+               <ng-template #errorButton>
+                  <button mdbWavesEffect class="btn btn-outline-primary btn-rounded btn-block waves-effect card-button" (click)="retryConfirmEmail()">{{ cardContent.buttonLabel }}</button>
+               </ng-template>
+            </div>
+
+         </ng-template>
+      </div>
+
+   </app-external-card>
+</app-external-layout>

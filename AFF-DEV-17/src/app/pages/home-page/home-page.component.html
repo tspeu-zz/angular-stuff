@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="box-title">
+        <span class="title">Programa de <strong>afiliados</strong></span>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <app-card [title]="title">
+                <app-resume [resumeCard]="resumeCard"></app-resume>
+            </app-card>
+            <div class="box-pdf">
+                <div class="text-pdf">
+                    <p> <span class="typografy-color">Informe en pdf:</span> guarda tus resultados, estadísticas y
+                        comparativas en el siguiente enlace de descarga</p>
+                </div>
+                <div class="button-pdf">
+                    <button type="button" class="btn">Descargar informe</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <app-card [graphCard]="graphCard">
+                <app-graph [graphCard]="graphCard"></app-graph>
+            </app-card> 
+        </div>
+    </div>
+</div>

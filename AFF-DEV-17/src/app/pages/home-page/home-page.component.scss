@@ -1,0 +1,52 @@
+@import "../../../styles/variables.scss";
+@import "node_modules/angular-bootstrap-md/assets/scss/core/colors";
+@import "node_modules/angular-bootstrap-md/assets/scss/bootstrap/functions";
+@import "node_modules/angular-bootstrap-md/assets/scss/bootstrap/variables";
+@import "node_modules/angular-bootstrap-md/assets/scss/core/mixins";
+
+.container { 
+  .col-md-4 {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  .col-md-8 {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  .box-title {
+    padding: 15px 0;
+
+    .title {
+      font-size: 30px;
+    }
+  }
+
+  .box-pdf {
+    padding: 20px 15px 0 15px;
+    color: $typography01;
+
+    .text-pdf {
+      font-size: 14px;
+      font-weight: 500;
+
+      .typografy-color {
+        color: $light-grey;
+      }
+    }
+
+    .button-pdf {
+      text-align: right;
+
+      @include media-breakpoint-down(md) {
+        text-align: center;
+        margin-bottom: 35px;
+      }
+
+      .btn {
+        color: white;
+        background-color: $light-blue-button;
+        border-radius: 4px;
+      }
+    }
+  }
+}

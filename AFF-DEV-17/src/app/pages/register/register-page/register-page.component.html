@@ -1,0 +1,79 @@
+<app-external-layout [config]="externalLayoutConfig">
+
+   <app-external-card [title]="titleCard">
+      <form class="text-center px-lg-2 pt-4 external-form text-color-input"
+            [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+         <input type="email" id="email" placeholder="Email" class="form-control mb-2" 
+            formControlName="email"
+            [ngClass]="{'is-invalid': registerControl.email.touched &&  registerControl.email.errors ,
+                        'is-valid': !registerControl.email.errors}">
+
+         <div class="form-row mb-2">
+            <div class="col">
+               <input type="text" id="name" placeholder="Nombre" class="form-control" 
+                  formControlName="name" required
+                  [ngClass]="{'is-invalid': registerControl.name.touched &&  registerControl.name.errors,
+                              'is-valid': registerControl.name.touched &&  !registerControl.name.errors }">
+            </div>
+            <div class="col">
+               <input type="text" id="surName" placeholder="Apellidos" class="form-control" 
+                  formControlName="surName" required
+                  [ngClass]="{'is-invalid': registerControl.surName.touched &&  registerControl.surName.errors,
+                              'is-valid': registerControl.surName.touched &&  !registerControl.surName.errors  }">
+            </div>
+         </div>
+
+         <div class="form-row mb-0">
+            <div class="col">
+               <input type="password" id="password" class="form-control" placeholder="Contraseña"
+                  aria-describedby="password" formControlName="password" minlength="8" required
+                  [ngClass]="{'is-invalid': registerControl.password.touched &&  registerControl.password.errors,
+                  'is-valid': registerControl.password.touched && !registerControl.password.errors}">
+            </div>
+
+            <div class="col">
+               <input type="password" id="confirmPassword" class="form-control" placeholder="Confirmación"
+                  aria-describedby="confirmPassword" formControlName="confirmPassword" minlength="8" required
+                  [ngClass]="{'is-invalid': registerControl.confirmPassword.touched && registerControl.confirmPassword.errors,
+                  'is-valid': registerControl.confirmPassword.touched && !registerControl.confirmPassword.errors}">
+               </div>
+         </div>
+
+         <div class="d-flex justify-content-start mt-2 error-text-panel" *ngIf="!registerError">
+            <small id="infoPassword" class="form-text text-muted mb-1 text-left">
+               Utiliza al menos ocho caracteres, una mayúscula, una minúscula y un número.
+               <span *ngIf="registerControl.confirmPassword.touched && registerControl.confirmPassword.errors">
+                  Las constraseñas no son iguales.
+               </span>
+            </small>
+         </div>
+
+         <div class="d-flex justify-content-start mt-2 error-text-panel mb-1 text-left" *ngIf="registerError">
+            <small id="errorMessage" class="form-text text-error ">  {{ errorMessage }} </small>
+         </div>
+
+
+         <p class="d-flex justify-content-start mb-0 mt-1 font-italic"><a href="#">Condiciones y usos</a></p>
+
+         <div class="d-flex justify-content-start mb-4">
+            <div class="custom-control custom-checkbox">
+               <input type="checkbox" id="checkCondition" 
+               class="custom-control-input" 
+               formControlName="checkCondition" required>
+               <label class="custom-control-label text-color-input" for="checkCondition">Acepto las condiciones</label>
+            </div>
+         </div>
+
+         <button class="btn btn-outline-primary btn-rounded btn-block waves-effect" type="submit"
+                 [disabled]="!registerForm.valid">
+            Crear cuenta
+         </button>
+
+
+         <p class="mt-4"><a [routerLink]="['/login']" class="text-color-input">Ya tengo un cuenta</a>
+
+      </form>
+   </app-external-card>
+
+</app-external-layout>

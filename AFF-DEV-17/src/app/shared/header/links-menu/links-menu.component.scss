@@ -1,0 +1,27 @@
+@import 'node_modules/angular-bootstrap-md/assets/scss/core/colors';
+@import 'node_modules/angular-bootstrap-md/assets/scss/bootstrap/functions';
+@import 'node_modules/angular-bootstrap-md/assets/scss/bootstrap/variables';
+@import 'node_modules/angular-bootstrap-md/assets/scss/core/mixins';
+@import '../../../../styles/variables.scss';
+::ng-deep .navbar-nav{
+  flex-direction: row;
+  height: 54px;
+}
+
+.custom-nav-item {
+  display:flex;
+  .nav-link {
+    padding: 15px;
+  }
+}
+
+.custom-nav-item:hover {
+  background: $light-blue;
+  cursor:pointer;
+}
+
+@include media-breakpoint-down(md) {
+  .mobile-links {
+    display: none
+  }
+}

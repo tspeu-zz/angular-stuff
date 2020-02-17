@@ -1,0 +1,31 @@
+<div class="card-body">
+    <div class="date-picker">
+        <mat-form-field>
+            <input for="picker" 
+            placeholder="Fecha de inicio"
+            (dateInput)="changeDate($event)" matInput 
+            [matDatepicker]="picker">
+            <mat-datepicker-toggle for="picker" matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker for="picker" #picker startView="year">
+            </mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div class="card-subtitle">
+        <h4>{{resumeCard.subtitle}}</h4>
+    </div>
+
+    <div class="card-box">
+        <div *ngFor="let item of resumeCard.items" class="card-content">
+            <p class="card-text">{{item.text}}:</p>
+            <p class="card-text-value">{{item.value}}</p>
+        </div>
+    </div>
+    <div class="card-total">
+        <p>
+            TOTAL: <span class="total">{{resumeCard.total}}</span>
+        </p>
+        <div class="comision-text">
+            <p>Comisión total neta.</p>
+        </div>
+    </div>
+</div>
