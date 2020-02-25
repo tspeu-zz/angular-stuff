@@ -1,0 +1,23 @@
+<div class="row welcome-page">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 header-page-section">
+        <h1 class="title-app text-align-left">Programa de <b>afiliados</b></h1>
+        <h2 class="title-page">Bienvenido,</h2>
+        <p class="description-page">Antes de empezar rellena los siguientes datos</p>
+    </div>
+
+    <div class="card  z-depth-2 mt-lg-2 mx-xl-5 mx-lg-5 mx-md-5">
+
+        <app-personal-data 
+        [countries]="countries"
+        (sharePersonalData)="onSharePersonalData($event)">
+        </app-personal-data>
+
+
+        <div class="line-separation"></div>
+
+        <app-invoice-data  
+        [countries]="countries"
+        [bindPersonalData]= "checkPersonalData"
+        ></app-invoice-data>
+    </div>
+</div>

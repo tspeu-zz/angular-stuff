@@ -1,0 +1,48 @@
+@import "./src/styles/variables";
+@import "./src/styles/mdboostrap-imports";
+
+.internal-content-section {
+    display: flex;
+    margin-top: 1.5rem;
+    justify-content: center;
+    .content {
+        width: 700px;
+    }
+}
+
+.header-page-section {
+  .text-align-right {
+    text-align: right;
+  }
+  .text-align-left {
+    text-align: left;
+  }
+
+  .title-app {
+    font-size: 1.3rem;
+    color: $nav-blue;
+    @include media-breakpoint-down(sm) {
+      text-align: center;
+    }
+  }
+
+  .title-page {
+    font-weight: 500;
+    text-align: center;
+    color: $dark-gray;
+    padding-top: 20px;
+    padding-bottom: 5px;
+  }
+
+  .description-page {
+    color: $dark-gray;
+    font-size: 0.9rem;
+    text-align: center;
+    span {
+      color: $light-grey;
+    }
+    b {
+      color: $light-blue
+    }
+  }
+}

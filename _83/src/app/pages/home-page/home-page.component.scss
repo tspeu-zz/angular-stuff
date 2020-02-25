@@ -1,0 +1,45 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mdboostrap-imports";
+@import "../../../styles/main-layaout";
+
+.home-page {
+  margin: 20px 0;
+
+  .header-page-section {
+    padding: {
+      top: 15px;
+      bottom: 15px;
+    }
+  }
+
+  .box-pdf {
+    padding: 20px 15px 0 15px;
+    color: $text-black-color;
+
+    .text-pdf {
+      font-size: 14px;
+      font-weight: 500;
+
+      
+
+      .typografy-color {
+        color: $light-grey;
+      }
+    }
+
+    .button-pdf {
+      text-align: right;
+
+      @include media-breakpoint-down(md) {
+        text-align: center;
+        margin-bottom: 35px;
+      }
+
+      .btn {
+        color: white;
+        background-color: $light-blue-button;
+        border-radius: 4px;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<div class="container-fluid external-layout">
+
+   <div class="row" *ngIf="config?.title">
+      <div class="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 title-section"
+           [style.justifyContent]="config?.titlePosition">
+         <h1 class="title"
+            [innerHTML]="config?.title"
+            [style.color]="config?.titleColor"></h1>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 content-section">
+         <div class="content">
+            <ng-content></ng-content>
+         </div>
+      </div>
+   </div>
+
+   <div class="row" *ngIf="config?.isActiveLogoFooter">
+      <div class="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 footer-section">
+         <img class="logo" [src]="config?.logoFooter">
+      </div>
+   </div>
+
+</div>

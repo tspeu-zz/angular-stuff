@@ -1,0 +1,5 @@
+<ul  class="navbar-nav mr-auto mobile-links">
+  <li class="nav-item custom-nav-item" *ngFor="let link of linksList" routerLinkActive="active">
+    <a [routerLink]="link?.url" class="nav-link waves-light">{{link?.text}}</a>
+  </li>
+</ul>

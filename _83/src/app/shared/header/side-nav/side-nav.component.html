@@ -1,0 +1,8 @@
+<div [ngClass]="open ? 'open-nav' : 'close-nav'" class="side-nav" >
+  <a class="link" *ngFor="let item of linksList" routerLinkActive="active" [routerLink]="item?.url">{{item.text}}</a>
+</div>
+
+<i (click)="controlNav()" class="fas fa-bars"></i>
+
+
+  

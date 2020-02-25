@@ -1,0 +1,165 @@
+@import "./src/styles/variables";
+
+.card-external {
+  min-height: 100px;
+  padding: 1rem;
+
+  .main-content {
+    .card-image {
+      width: 60px;
+      padding-bottom: 20px;
+    }
+
+    .main-message {
+      color: $light-blue;
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+  }
+
+  .secondary-message {
+    color: $light-grey;
+    font-size: 1rem;
+    padding: .5rem 0;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .description-message {
+    color: $light-grey;
+    font-size: 0.9rem;
+    padding: .5rem 0;
+    margin: 0;
+    p {
+      margin: 0;
+    }
+  }
+
+  .card-options {
+    display: flex;
+    margin: 1rem 0 0 0;
+    .card-button {
+      border-radius: 50rem;
+      border-color: $light-blue-button;
+      width: auto;
+      height: 3rem;
+      padding: 10px 30px;
+    }
+    .redirect-to {
+      text-decoration: underline;
+      color: $light-grey
+    }
+  }
+
+}
+
+.external-card-layout {
+  .card-header {
+      height: 80px;
+      border-radius: 0;
+  }
+  
+  .card-bg-header {
+      background-color: $card-dark-background;
+      color: white;
+      display: flex;
+      justify-content: center; 
+  }
+
+  .text-card-header {
+      font-size: 1.5rem;
+  }
+  
+  .header-logo {
+      max-width: 150px;
+      width: auto;
+      
+  }
+  
+  h2 {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center; 
+  }
+}
+
+.external-form {
+  .text-color-input {
+    color: $light-grey;
+  }
+  
+  .text-link {
+    color: $light-blue;
+  }
+  
+  .text-error {
+    color: $info-error-red;
+  }
+
+  .btn {
+    border-radius: 50rem;
+    border-color: $light-blue-button;
+    height: 3rem;
+  }
+
+  .checkbox-lg .custom-control-label::before,
+  .checkbox-lg .custom-control-label::after {
+    top: .8rem;
+    width: 01.25rem;
+    height: 1.25rem;
+  }
+
+  .checkbox-lg .custom-control-label {
+    padding-top: 13px;
+    padding-left: 6px;
+  }
+
+  .error-text-panel {
+    height: 60px;
+  }
+  
+  .login-error-text-panel {
+    height: 45px;
+  }
+
+  a {
+    text-decoration-line: underline;
+
+  }
+  a:hover {
+    color: $light-blue;
+}
+}
+
+.response-success-page {
+  .text-color-input {
+      color: $light-grey;
+      margin: 0;
+      font-size: 1rem;
+  }
+
+  .text-link {
+      color: $light-blue;
+  }
+  .image-message {
+      width: 80px;
+  }
+  .send-again {
+      font-size: smaller;
+      color: $light-grey;
+  }
+  
+  p {
+      margin: 0;
+      padding: 0;
+  }
+  
+  a {
+    text-decoration-line: underline;
+
+  }
+  a:hover {
+      color: $light-blue;
+  }
+}

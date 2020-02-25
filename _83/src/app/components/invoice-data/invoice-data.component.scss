@@ -1,0 +1,168 @@
+@import "./src/styles/variables";
+@import "./src/styles/main-layaout";
+@import "node_modules/angular-bootstrap-md/assets/scss/core/colors";
+@import "node_modules/angular-bootstrap-md/assets/scss/bootstrap/functions";
+@import "node_modules/angular-bootstrap-md/assets/scss/bootstrap/variables";
+@import "node_modules/angular-bootstrap-md/assets/scss/core/mixins";
+@import "node_modules/angular-bootstrap-md/assets/scss/core/mixins";
+
+
+
+.welcome-page {
+  margin: 20px 0;
+  .welcome-card-form {
+
+    .card-header {
+      border-radius: 0;
+      background-color: $white-text;
+      border-color:  $white-text;
+      color: $light-blue;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      padding: 0 0 0.5rem 0;
+
+      i {
+        font-size: 32px;
+      }
+
+      h4 {
+        font-size: 1.25rem;
+      }
+    }
+
+    .card-body {
+      padding: 0 0 1.25rem 0;
+    }
+
+    .btn {
+      background-color: $light-blue-button;
+      color: $white-text;
+      height: 3rem;
+    }
+
+    .text-color-input {
+      color: $light-grey;
+    }
+
+    .line-separation {
+      width: 100%;
+      height: 2px;
+      background-color: $line-grey;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .line-separation-invoice {
+      width: 100%;
+      height: 2px;
+      background-color: $line-grey;
+      margin-top: 1.5rem;
+      margin-bottom: .5rem;
+    }
+
+    .text-size-info {
+      font-size: .85rem;
+      color: $light-grey;
+    }
+
+    a {
+      text-decoration-line: underline;
+    }
+
+    a:hover {
+      color: $light-blue;
+    }
+
+    .prefix-number {
+      padding-top: .5rem;
+      color: $light-grey;
+      min-width:  38px;
+      font-size: .85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+  }
+
+  .iban-validator {
+    .iban-text {
+      .col-2-iban {
+        padding: .1rem;
+      }
+      .is-invalid {
+        padding-right: 0;
+        background-image: none;
+      }
+      .is-valid {
+        padding-right: 0;
+        background-image: none;
+      }
+      .form-control {
+        padding: 0;
+      } 
+    }
+}
+
+  .text-form {
+      .form-control {
+          color: $text-black-color;
+      }
+  }
+
+  @include media-breakpoint-down(sm) {
+      
+      .phone-number {
+          .is-invalid {
+              padding-right: 0;
+              background-image: none;
+          }
+  
+          .is-valid{
+              padding-right: 0;
+              background-image: none;
+          }
+      }
+
+      .accept-conditions {
+          padding: 0;
+          
+          .col {
+              padding: 0 5px;
+          }
+      }
+
+      .text-size-info {
+          font-size: .75rem;
+          color: $light-grey;
+          text-align: left !important;
+      }
+
+  }
+
+    .accept-conditions {
+        padding: 0;
+        
+        .col {
+            padding: 0 5px;
+        }
+    }
+
+    .text-size-info {
+        font-size: .85rem;
+        color: $light-grey;
+        text-align: left !important;
+    }
+}
+::ng-deep {
+    
+    ng-select.ng-touched .ng-select-container {
+        border-color:#f4516c;
+        box-shadow: none;
+    }
+    
+    ng-select.ng-valid .ng-select-container {
+        border-color: $info-success-green;
+    }
+    
+}

@@ -1,0 +1,119 @@
+<div class="welcome-page"> 
+<div class="welcome-card-form">
+<div class="card-header text-center">  
+    <i class="far fa-user"></i>
+    <h4> Datos personales</h4>
+</div>
+
+<div class="card-body mx-1 row  justify-content-center align-items-center">
+    <form class="text-center text-form  col-xl-6 col-lg-6 col-md-8 col-sm-12"
+    [formGroup]="welcomeForm" (ngSubmit)="onSubmitPersonalData()">
+        
+        <input type="text" id="name" placeholder="* Nombre"
+            class="form-control mb-3" maxlength="100"
+            formControlName="name" 
+            [ngClass]="{'is-invalid': welcomeControl.name.touched &&  welcomeControl.name.errors,
+            'is-valid': !welcomeControl.name.errors }"
+            required>
+
+        <input type="text" id="surname" placeholder="* Apellidos" 
+            class="form-control mb-3" maxlength="100"
+            formControlName="surname" 
+            [ngClass]="{'is-invalid': welcomeControl.surname.touched &&  welcomeControl.surname.errors,
+            'is-valid':  !welcomeControl.surname.errors }"
+            required>
+
+        <input type="text" id="dni" placeholder="* DNI/NIE"
+            class="form-control mb-3" maxlength="15"
+            formControlName="dni" 
+            [ngClass]="{'is-invalid': welcomeControl.dni.touched &&  welcomeControl.dni.errors,
+            'is-valid': welcomeControl.dni.touched &&  !welcomeControl.dni.errors }"
+            required>
+        
+        <input type="text" id="address" placeholder="* Dirección"  
+            class="form-control mb-3" maxlength="300"
+            formControlName="address" 
+            [ngClass]="{'is-invalid': welcomeControl.address.touched &&  welcomeControl.address.errors,
+            'is-valid': welcomeControl.address.touched &&  !welcomeControl.address.errors }"
+            required>
+
+        <div class="form-row mb-3">
+            <div class="col-6">
+                <ng-select  required
+                            placeholder="* País"
+                            bindLabel="name"                    
+                            bindValue="isoCode"
+                            formControlName="countryCode"
+                            [items]="countries"
+                            [selectOnTab]="true"
+                            [clearable]="false" 
+                            (ngModelChange)="onChangeCountry($event)">
+                </ng-select> 
+            </div>
+            <div class="col-6">
+                <ng-select  required
+                            placeholder="* Provincia"
+                            bindLabel="name"
+                            bindValue="regionCode"
+                            formControlName="regionCode"
+                            [items]="regions"
+                            [selectOnTab]="true"
+                            [clearable]="false"> 
+                </ng-select>
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <div class="col-4">
+                <input type="text" id="postal-code" placeholder="* C. Postal" 
+                    class="form-control" maxlength="20"
+                    formControlName="postalCode" 
+                    [ngClass]="{'is-invalid': welcomeControl.postalCode.touched &&  welcomeControl.postalCode.errors,
+                    'is-valid': welcomeControl.postalCode.touched && !welcomeControl.postalCode.errors }"
+                    required>                     
+            </div>
+            
+            <span class="prefix-number">{{prefixCountry}}</span>
+
+            <div class="col phone-number">
+                <input type="text" id="phone" placeholder="* Teléfono" 
+                    class="form-control" maxlength="15"
+                    formControlName="phone" 
+                    [ngClass]="{'is-invalid': welcomeControl.phone.touched &&  welcomeControl.phone.errors,
+                    'is-valid': welcomeControl.phone.touched &&  !welcomeControl.phone.errors }"
+                    required>
+            </div>
+        </div>
+                    
+        <div class="line-separation"></div>
+                
+        <span class="text-center mb-4 text-size-info"> * Campos obligatorios: </span>
+        
+        <div class="d-flex mt-3 mb-4 text-size-info">
+            <a href="#" class="text-left">Política de privacidad y uso de datos:</a>
+            
+            <div class="row ml-1 accept-conditions justify-content-end align-items-end">
+                <div class="col">
+                    <label class="text-left" for="accept">* He leido y acepto
+                    </label>
+                        <input type="checkbox" id="accept" class="ml-1 accept-conditions"
+                        formControlName="accept" required>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn mb-4 btn-block waves-effect" type="submit"
+            [disabled]="!welcomeForm.valid"> Continuar
+        </button> 
+        
+        <div class="custom-control custom-checkbox text-left text-color-input my-3">
+            <input type="checkbox" class="custom-control-input" id="check-invoice"
+                    formControlName="showInvoice">
+            <label class="custom-control-label" for="check-invoice" >
+                Utilizar los datos personales introducidos en el anterior paso
+            </label>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+
