@@ -19,6 +19,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatStepperModule } from '@angular/material/stepper';
+
 
 // components
 import { FullPageLayoutComponent } from './shared/layouts/full-page-layout/full-page-layout.component';
@@ -106,6 +108,7 @@ export function initializeApp(appInitService: AppInitService) {
       ReactiveFormsModule,
       BrowserAnimationsModule,
       NgSelectModule,
+      MatStepperModule
    ],
    exports: [
       MatDatepickerModule,
@@ -116,7 +119,7 @@ export function initializeApp(appInitService: AppInitService) {
       LinksService,
       DropDownService,
       IconsService,
-      { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [ AppInitService ], multi: true},
+      { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true },
       { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
       { provide: MAT_DATE_LOCALE, useValue: 'es' },
       { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
