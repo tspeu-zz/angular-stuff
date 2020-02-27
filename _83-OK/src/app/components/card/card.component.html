@@ -1,0 +1,18 @@
+<div class="generic-card">
+    <div class="card-title">
+        <div *ngIf="title; else dropdown">
+            {{title}}
+        </div>
+        <ng-template #dropdown>
+            <div class="dropdown">
+                <select (change)="selectOption($event.target.value)"   >
+                    <option *ngFor="let item of dropdownOptions" [value]="item.key">{{item.text}}</option>
+                </select>
+                <i class="fas fa-caret-down"></i>
+            </div>
+        </ng-template>
+    </div>
+    <div class="body-card">
+        <ng-content></ng-content>
+    </div>
+</div>

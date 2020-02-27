@@ -1,0 +1,28 @@
+@import "./variables";
+
+.pagination-controls ::ng-deep {
+  text-align: center;
+  .ngx-pagination {
+    margin: 20px 0;
+    padding: 0;
+    .current {
+      background: $light-blue-button;
+      transition: all .2s linear;
+      border-radius: .125rem;
+      padding: .25rem .75rem;
+      box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+    }
+    li {
+      a {
+        padding: .5rem .75rem;
+        margin: 0 1px;
+        &:focus {
+          outline: 0;
+        }
+        &:hover {
+          padding: .25rem .75rem;
+        }
+      }
+    }
+  }
+}

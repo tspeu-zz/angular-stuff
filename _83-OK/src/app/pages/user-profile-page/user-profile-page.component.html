@@ -1,0 +1,35 @@
+<div class="row user-profile-page">
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 header-page-section">
+        <h1 class="title-app text-align-left">Programa de <b>afiliados</b></h1>
+        <h2 class="title-page">Perfil de usuario</h2>
+    </div>
+
+    <div class="card z-depth-2 mt-lg-2 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <mat-horizontal-stepper [linear]="isLinear" #stepper>
+
+            <mat-step [stepControl]="firstFormGroup" color="primary">
+                <ng-template matStepLabel>Datos presonales</ng-template>
+                <app-personal-data
+                    [affiliateData]= "affiliateData"
+                    [isFirstVisit]= false
+                    [user]="affiliate"
+                    [countries]="countries">
+                </app-personal-data>
+            </mat-step>
+        <!-- <div class="line-separation"></div> -->
+        <mat-step [stepControl]="secondFormGroup">
+            <ng-template matStepLabel>Datos de facturación</ng-template>
+            <app-invoice-data
+                [isFirstVisit]= false
+                [user]="affiliate"
+                [countries]="countries">
+            </app-invoice-data>
+        </mat-step>
+        
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
+        </mat-horizontal-stepper>
+
+    </div>
+</div>

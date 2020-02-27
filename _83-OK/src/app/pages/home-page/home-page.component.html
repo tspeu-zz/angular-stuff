@@ -1,0 +1,27 @@
+<div class="row home-page">
+
+   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 header-page-section">
+      <h1 class="title-app text-align-left">Programa de <b>afiliados</b></h1>
+   </div>
+
+   <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+      <app-card [title]="title">
+         <app-resume [resumeCard]="resumeCard"></app-resume>
+      </app-card>
+      <div class="box-pdf">
+         <div class="text-pdf">
+            <p><span class="typografy-color">Informe en pdf:</span> guarda tus resultados, estadísticas y
+               comparativas en el siguiente enlace de descarga</p>
+         </div>
+         <div class="button-pdf">
+            <button type="button" class="btn" (click)="downloadResumeReport()">Descargar informe</button>
+         </div>
+      </div>
+   </div>
+   <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+      <app-card [dropdownOptions]="dropdownOptions" (sendDropdownOption)="changeContentGraph($event)">
+         <app-graph [graphCard]="graphCard"></app-graph>
+      </app-card>
+   </div>
+</div>
+

@@ -1,0 +1,68 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mdboostrap-imports";
+
+.card-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border-radius: 0;
+  padding: 0;
+
+  .date-picker {
+    padding-left: 30px;
+
+    @media (max-width: 991px) and (min-width: 768px) {
+      mat-form-field {
+        width: 84%;
+      }
+    }
+  }
+
+  .card-subtitle {
+    padding: 15px 30px 0 30px;
+
+    h4 {
+      color: $text-black-color;
+      font-size: 17px;
+      font-weight: 500;
+    }
+  }
+
+  .card-box {
+    padding: 15px 30px 0 30px;
+    color: $light-grey;
+    font-weight: 400;
+    font-size: 15px;
+
+    .card-content {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .card-text-value {
+      color: $text-black-color;
+    }
+  }
+
+  .card-total {
+    align-self: flex-end;
+    padding: 15px 30px 0 30px;
+    color: $text-black-color;
+    font-weight: 400;
+    font-size: 15px;
+
+    .total {
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .comision-text {
+      text-align: right;
+      font-size: 9px;
+    }
+  }
+}

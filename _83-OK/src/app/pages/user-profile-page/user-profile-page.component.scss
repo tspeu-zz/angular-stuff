@@ -1,0 +1,33 @@
+@import "./src/styles/variables";
+@import "../../../styles/mdboostrap-imports";
+@import "./src/styles/main-layaout";
+@import "./src/styles/full-page-layout";
+
+
+
+.user-profile-page {
+
+    .header-page-section {
+        padding: {
+          top: 15px;
+          bottom: 15px;
+        }
+      }
+
+    // .mat-step
+    // .mat-step-icon-state-number .mat-step-icon .mat-step-icon-selected
+    // .mat-step-header .mat-step-icon-selected, 
+    // .mat-step-header .mat-step-icon-state-done, 
+    // .mat-step-header .mat-step-icon-state-edit {
+    //     background-color: $light-blue-button;
+    //     color: $white-text;
+    // }
+
+    // .mat-step-header .mat-step-icon-selected, 
+    // .mat-step-header .mat-step-icon-state-done, 
+    // .mat-step-header .mat-step-icon-state-edit {
+    //   background-color: $light-blue-button;
+    //   color: $white-text;
+    // }
+
+}

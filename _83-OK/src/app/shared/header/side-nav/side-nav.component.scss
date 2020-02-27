@@ -1,0 +1,43 @@
+@import '../../../../styles/variables.scss';
+
+.side-nav {
+  height: 100%; 
+  width: 0; 
+  position: fixed;
+  z-index: 10;
+  top: 54px; 
+  left: 0;
+  background-color: $nav-blue; 
+  overflow-x: hidden;
+  transition: 0.1s; 
+
+  .link{
+    display: block;
+    padding: 10px 20px 10px 20px;
+    color: white;
+  }
+  .active{
+    background: $hover-blue-color;
+  }
+  .link:hover{
+    background: $hover-blue-color;
+    cursor:pointer;
+  }
+}
+
+.open-nav {
+  width: 250px;
+  color:white
+}
+
+.close-nav {
+  width: 0;
+  color:white
+}
+
+.fa-bars {
+  color: white;
+  font-size: 20px;
+}
+
+

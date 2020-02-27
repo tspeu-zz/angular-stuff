@@ -1,0 +1,14 @@
+@import "./src/styles/variables";
+@import "./src/styles/main-layaout";
+@import "./src/styles/full-page-layout";
+@import "node_modules/angular-bootstrap-md/assets/scss/core/colors";
+@import "node_modules/angular-bootstrap-md/assets/scss/core/mixins";
+@import "node_modules/angular-bootstrap-md/assets/scss/bootstrap/functions";
+@import "node_modules/angular-bootstrap-md/assets/scss/bootstrap/variables";
+
+.personal-data {
+    .close-icon {
+        color: $light-blue-button;
+        font-size: 1.2rem;
+    }
+}

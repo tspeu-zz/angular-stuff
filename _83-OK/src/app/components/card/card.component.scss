@@ -1,0 +1,42 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mdboostrap-imports";
+
+.generic-card {
+  box-shadow: -5px 6px 5px -2px rgba(0, 0, 0, 0.23);
+  background-color: #ffffff;
+
+  .card-title {
+    padding: 15px 30px 15px 30px;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    color: $text-black-color;
+    
+    .dropdown {
+      .fa-caret-down{
+        margin-left: 5px;
+      }
+      p {
+        display: inline-block;
+        font-weight: bold;
+      }
+    }
+
+    .dropdown select {
+      background-color: white;
+      border: 0 !important;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      text-indent: 0.01px;
+      text-overflow: "";
+      color: $text-black-color;
+      font-size: 17px;
+      font-weight: 500;
+    }
+  }
+  .body-card{
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-top: none;
+  }
+}

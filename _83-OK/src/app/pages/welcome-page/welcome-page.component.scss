@@ -1,0 +1,13 @@
+@import "./src/styles/variables";
+@import "./src/styles/mdboostrap-imports";
+@import "./src/styles/main-layaout";
+@import "./src/styles/full-page-layout";
+
+.welcome-page {
+  .header-page-section {
+    padding: {
+      top: 15px;
+      bottom: 15px;
+    }
+  }
+}
