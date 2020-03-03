@@ -1,0 +1,81 @@
+<div class="row banner-page">
+   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 header-page-section">
+      <h1 class="title-app text-align-right">Programa de <b>afiliados</b></h1>
+      <h2 class="title-page">Busca un curso, genera tu banner</h2>
+      <p class="description-page">Selecciona una facultad <span>(ej. medicina)</span>, el tipo de estudio a realizar <span>(ej.master)</span> y una especialidad dentro de la misma <span>(ej. anestesiología)</span>. Podrás desplegar la formación disponible y escoger uno de los cursos. Una vez seleccionado, aparecerá su banner correspondiente, escoge un tamaño y <b>solo tienes que copiar y pegar el enlace en tus redes sociales, o el iframe resultante en tu web</b>.</p>
+   </div>
+   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 search-card">
+
+      <app-card [title]="'Buscador de cursos'">
+         <div class="row card-body">
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 filter-search" *ngFor="let filter of filtersGroups">
+               <ng-select bindLabel="label"
+                          [placeholder]="filter.label"
+                          [items]="filter.items"
+                          [labelForId]="filter.key"
+                          [ngModel]="setFilterSelected(filter.key)"
+                          (change)="onFilterChange($event,filter.key)"></ng-select>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-8 col-lg-9 col-xl-9 text-search-section">
+               <input mdbInput type="text" class="form-control text-search" placeholder="Buscar..." [(ngModel)]="searchTerms">
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 search-button-section">
+               <button type="button" mdbBtn class="search-button" mdbWavesEffect (click)="search()">Buscar</button>
+            </div>
+         </div>
+      </app-card>
+   </div>
+
+   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 results-card">
+      <app-card [title]="'Cursos'">
+
+         <ng-container *ngIf="isLoading; else noLoading">
+            <div class="d-flex align-items-center loading">
+               <div class="spinner-border" role="status" aria-hidden="true"></div>
+            </div>
+         </ng-container>
+
+         <ng-template #noLoading>
+            <ng-container *ngIf="courses.length > 0; else notResults">
+               <ul class="list-group list-group-flush">
+                  <li class="list-group-item list-item-courses" *ngFor="let course of courses | paginate: { itemsPerPage: paginated.pageSize,
+                                                                      currentPage: paginated.page,
+                                                                      totalItems: totalItems }">
+                     {{course.title}}
+                     <button type="button" mdbBtn class="copy-link-button" mdbWavesEffect (click)="copyToClickBoard(course.url)">
+                        <i class="fas fa-check"></i>
+                        Copiar enlace
+                     </button>
+                  </li>
+               </ul>
+            </ng-container>
+
+            <ng-template #notResults>
+               <div class="no-results">
+                  <i class="fa fa-exclamation-circle"></i> No se han encontrado resultados.
+               </div>
+            </ng-template>
+         </ng-template>
+
+      </app-card>
+   </div>
+
+
+   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <pagination-controls class="pagination-controls"
+                           *ngIf="courses.length > 0"
+                           [previousLabel]="paginationControlConfig?.previousLabel"
+                           [nextLabel]="paginationControlConfig?.nextLabel"
+                           [maxSize]="paginationControlConfig?.maxSize"
+                           (pageChange)="onPageChange($event)"></pagination-controls>
+   </div>
+</div>
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 export class ResponseBody<T> {
    success?: boolean;
-   data?: T & T[];
+   data?: T;
    errorMsg?: any;
    errorCode?: number;
 }

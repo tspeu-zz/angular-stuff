@@ -91,7 +91,7 @@
   "indent": [
     true,
     "spaces",
-    3
+    2
   ],
   "eofline": true,
   "semicolon": [true, "always"]

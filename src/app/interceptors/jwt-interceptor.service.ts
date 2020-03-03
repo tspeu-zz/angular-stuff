@@ -25,17 +25,18 @@ import {environment} from '../../environments/environment';
    }
 
    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-      if (!this.isWhitelistedDomain(request) || this.isBlacklistedRoute(request)) {
-         const token = this.jwt.getAccessToken();
-         if (token) {
-            request = request.clone({
-               setHeaders: {
-                  Authorization: `Bearer ${token}`
-               }
-            });
+     if (!this.isWhitelistedDomain(request) || this.isBlacklistedRoute(request) ) {
+       return next.handle(request);
+     }
+     const token = this.jwt.getAccessToken();
+     if (token) {
+       request = request.clone({
+         setHeaders: {
+           Authorization: `Bearer ${token}`
          }
-      }
-      return next.handle(request).pipe(catchError(error => this.handleAuthError(error)));
+       });
+     }
+     return next.handle(request).pipe(catchError(error => this.handleAuthError(error)));
    }
 
    private isWhitelistedDomain(request: HttpRequest<any>): boolean {

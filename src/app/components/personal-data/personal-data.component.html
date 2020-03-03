@@ -1,0 +1,194 @@
+<div class="user-profile-form">
+    <div class="card-header text-center">  
+        <i class="far fa-user"></i>
+        <h4> Datos personales</h4>
+    </div>
+
+    <div class="card-body row justify-content-center align-items-center">
+        <form class="text-center text-form  col-xl-6 col-lg-6 col-md-8 col-sm-12"
+        [formGroup]="welcomeForm" (ngSubmit)="onSubmitPersonalData()">
+            <input type="text" id="name" placeholder="* Nombre"
+                class="form-control mb-3" maxlength="100"
+                formControlName="name" 
+                [ngClass]="{'is-invalid': welcomeControl.name.touched &&  welcomeControl.name.errors,
+                'is-valid': !welcomeControl.name.errors }"
+                required>
+
+            <input type="text" id="surname" placeholder="* Apellidos" 
+                class="form-control mb-3" maxlength="100"
+                formControlName="surname" 
+                [ngClass]="{'is-invalid': welcomeControl.surname.touched &&  welcomeControl.surname.errors,
+                'is-valid':  !welcomeControl.surname.errors }"
+                required>
+
+            <div class="form-row mb-3">
+                <div class="col-6">
+                    <ng-select  required
+                        placeholder="* Nacionalidad"
+                        bindLabel="name"                    
+                        bindValue="isoCode"
+                        formControlName="nationality"
+                        [items]="countries"
+                        [selectOnTab]="true"
+                        [clearable]="false">
+                    </ng-select> 
+                </div>
+                <div class="col-6">
+                    <input type="text" id="dni" placeholder="* DNI/NIE"
+                        class="form-control" maxlength="15"
+                        formControlName="dni" 
+                        [ngClass]="{'is-invalid': welcomeControl.dni.touched &&  welcomeControl.dni.errors,
+                        'is-valid':  !welcomeControl.dni.errors }"
+                        required>
+                </div>
+            </div>
+
+            
+            <input type="text" id="address" placeholder="* Dirección"  
+                class="form-control mb-3" maxlength="300"
+                formControlName="address" 
+                [ngClass]="{'is-invalid': welcomeControl.address.touched &&  welcomeControl.address.errors,
+                'is-valid':  !welcomeControl.address.errors }"
+                required>
+
+            <div class="form-row mb-3">
+                <div class="col-6">
+                    <ng-select  required
+                                placeholder="* País"
+                                bindLabel="name"                    
+                                bindValue="isoCode"
+                                formControlName="countryCode"
+                                [items]="countries"
+                                [selectOnTab]="true"
+                                [clearable]="false" 
+                                (ngModelChange)="onChangeCountry($event)">
+                    </ng-select> 
+                </div>
+                <div class="col-6">
+                    <ng-select  required
+                                placeholder="* Provincia"
+                                bindLabel="name"
+                                bindValue="regionCode"
+                                formControlName="regionCode"
+                                [items]="regions"
+                                [selectOnTab]="true"
+                                [clearable]="false"> 
+                    </ng-select>
+                </div>
+            </div>
+            <div class="form-row mb-2">
+                <div class="col-4">
+                    <input type="text" id="postal-code" placeholder="* C. Postal" 
+                        class="form-control" maxlength="20"
+                        formControlName="postalCode" 
+                        [ngClass]="{'is-invalid': welcomeControl.postalCode.touched &&  welcomeControl.postalCode.errors,
+                        'is-valid': !welcomeControl.postalCode.errors }"
+                        required>                     
+                </div>
+                
+                <span class="prefix-number">{{prefixCountry}}</span>
+
+                <div class="col phone-number">
+                    <input type="text" id="phone" placeholder="* Teléfono" 
+                        class="form-control" maxlength="15"
+                        formControlName="phone" 
+                        [ngClass]="{'is-invalid': welcomeControl.phone.touched &&  welcomeControl.phone.errors,
+                        'is-valid':   !welcomeControl.phone.errors }"
+                        required>
+                </div>
+            </div>
+                        
+            <div class="line-separation"></div>
+                    
+            <span class="text-center mb-4 text-size-info"> * Campos obligatorios: </span>
+            
+            <div class="d-flex mt-3 mb-3 text-size-info"
+                *ngIf="showPrivacyPolicy">   
+                <div class="form-row accept-conditions justify-content-end align-items-end">
+                    <div class="col">
+                        <label class="text-left mr-2" for="accept">* He leído y acepto
+                            <a (click)="basicModal.show()" class="text-left mr-2">
+                                Política de privacidad y uso de datos:</a>
+                            <input type="checkbox" id="accept" class="ml-1 accept-conditions"
+                            formControlName="accept" required>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-color-input mb-2"
+                *ngIf="sharePersonalData">
+                <label class="form-row " for="check-invoice">
+                    ¿Utilizar los datos personales como datos de facturación?
+                </label>
+                <div class="row  justify-content-center align-items-center">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="affirmative"
+                        class="custom-control-input"  
+                        value=1 name="showInvoice"
+                        formControlName="showInvoice">
+                        <label class="custom-control-label" for="affirmative">Sí</label>
+                    </div>           
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio"  id="negative" 
+                        class="custom-control-input"
+                        value=0 name="showInvoice"
+                        formControlName="showInvoice"
+                        [checked]="true">
+                        <label class="custom-control-label" for="negative">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn mt-3 btn-block waves-effect mb-4" type="submit"
+                [disabled]="!welcomeForm.valid"> {{ labelSaveButton }}
+            </button> 
+        </form>
+    </div>
+</div>  
+
+<div mdbModal #basicModal="mdbModal" class="personal-data modal fade" tabindex="-1" role="dialog" 
+    aria-labelledby="myBasicModalLabel" style="overflow: auto" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          <span aria-hidden="true"class="close-icon">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Política de privacidad y uso de datos:</h4>
+      </div>
+      <div class="modal-body">
+        <p><strong>Lorem ipsum dolor sit</strong>amet, consectetur adipiscing elit. Sed ultrices mi sed velit tincidunt maximus id a
+          augue. Pellentesque finibus pharetra ex, ac imperdiet nisl venenatis sed. Sed nunc mi, auctor vitae lorem
+          quis, elementum efficitur felis. Proin tincidunt arcu eu dui malesuada lacinia. Nulla quis quam hendrerit,
+          imperdiet magna et, ornare sapien. Sed rutrum, lacus et facilisis mollis, est lectus dapibus dui, sed
+          convallis sem leo a odio. Proin convallis est nec aliquet scelerisque. Phasellus maximus bibendum suscipit.
+          Donec ut egestas nunc. Sed ligula risus, dignissim non ipsum id, vehicula tincidunt tellus. Proin at diam
+          eros. Nam cursus dolor at sem tincidunt consectetur. Aenean pretium ac dolor ac tincidunt.
+
+          <strong>In vulputate sem orci, et pulvinar </strong> ultrices quis. Donec aliquam eros non dolor vestibulum auctor eu ut
+          urna. Duis at vestibulum metus, ut lobortis nunc. Praesent aliquet mi ante, sed ultrices neque pulvinar vitae.
+          Mauris in tortor rutrum, faucibus ipsum vitae, ultrices velit. Pellentesque dignissim velit magna, a posuere
+          magna venenatis et. Suspendisse venenatis nulla id mi laoreet, vitae posuere lectus consectetur. Donec sit
+          amet risus metus. Praesent sed tempor dolor. Maecenas ornare, urna volutpat finibus condimentum, lectus nunc
+          tempus quam, a sagittis sem magna ac est.
+
+          Sed at lobortis ipsum. Aliquam ullamcorper, nisi</p>
+          <p>
+            Nullam eu sem justo. Duis vitae varius risus, at tincidunt diam. In non justo et velit finibus cursus non id diam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Etiam quis sollicitudin sapien. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed tempus odio nec nunc pulvinar, eget aliquam odio viverra. Nam non luctus orci. Nulla tristique lacus non mi gravida pharetra. Ut luctus neque dignissim ex ullamcorper sollicitudin. Nam sed sodales mauris.   
+          </p>
+          <p>
+            Nullam mattis lectus justo, eu aliquam nulla tincidunt vel. Phasellus feugiat magna lacus, vitae lobortis turpis consequat eu. Suspendisse potenti. Mauris pellentesque ornare odio in aliquam. Integer auctor ut nunc vulputate eleifend. Maecenas a aliquam ligula. Cras sed nisi eu nunc vulputate dignissim vel ut ligula.
+          </p>
+          <p>Sed at lobortis ipsum. Aliquam ullamcorper, nisi ut dignissim semper, dui elit luctus erat, sed porta libero justo ut lorem. Donec lobortis maximus nibh, nec ultricies sem venenatis in. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nisl lacus, interdum feugiat tempor a, venenatis quis est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed aliquam auctor fermentum. Proin ac ligula ac felis consequat semper. Integer ut mauris tellus. Quisque turpis eros, rutrum quis ultricies sed, sollicitudin in augue. Sed metus ex, dictum vitae ante a, semper eleifend erat.
+
+          </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Close" 
+        (click)="basicModal.hide()" mdbWavesEffect>Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

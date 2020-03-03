@@ -1,28 +1,36 @@
 <app-external-layout [config]="externalLayoutConfig">
+
    <app-external-card>
       <form class="text-center px-lg-2 pt-4 external-form text-color-input" 
             [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-         <input type="email" class="form-control mb-2 mt-0" placeholder="Email o Código" 
-         formControlName="codeOrEmail" 
-         [ngClass]="{'is-valid': !loginControls.codeOrEmail.errors,
-                     'is-invalid': loginControls.codeOrEmail.touched && loginControls.codeOrEmail.errors }"
-         required />
+         <input type="email" placeholder="Email o Código"
+         class="form-control mb-2 mt-0"  
+            formControlName="codeOrEmail" 
+            [ngClass]="{'is-valid': !loginControls.codeOrEmail.errors,
+            'is-invalid': loginControls.codeOrEmail.touched && loginControls.codeOrEmail.errors }"
+            required />
          
-         <input type="password" class="form-control mb-0" placeholder="Contraseña" formControlName="password"
-         [ngClass]="{'is-invalid': loginControls.password.touched &&  loginControls.password.errors,
-                     'is-valid': loginControls.password.touched && !loginControls.password.errors}"
-         required/>
+         <input type="password"  placeholder="Contraseña" 
+            class="form-control mb-0"
+            formControlName="password"
+            [ngClass]="{'is-invalid': loginControls.password.touched &&  loginControls.password.errors,
+            'is-valid': loginControls.password.touched && !loginControls.password.errors}"
+            required/>
          
          <div class="d-flex justify-content-start mt-1 login-error-text-panel mb-0 text-left">
-            <small id="errorMessage" class="form-text text-error "
-                  *ngIf="errorLogin">  {{ errorMessage }} </small>
+            <small id="error-message" 
+               class="form-text text-error "
+               *ngIf="errorLogin">  {{ errorMessage }} 
+            </small>
          </div>
          
          <div class="d-flex justify-content-start mt-0">
             <div class="custom-control custom-checkbox">
-               <input type="checkbox" class="custom-control-input" id="checkRemember" formControlName="checkRemember">
-               <label class="custom-control-label text-color-input" for="checkRemember">Guardar email</label>
+               <input type="checkbox" id="check-remember" 
+                  class="custom-control-input" 
+                  formControlName="checkRemember">
+               <label class="custom-control-label text-color-input" for="check-remember">Guardar email</label>
             </div>
          </div>
 
@@ -38,7 +46,6 @@
             class="text-color-input">Crear una cuenta nueva</a></p>
 
       </form>
-
    </app-external-card>
 
 </app-external-layout>

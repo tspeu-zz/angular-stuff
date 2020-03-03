@@ -1,0 +1,20 @@
+<div class="user-icons" (click)="controlNav()">
+
+  <span class="name-label">{{user.name}} {{user.surname}}</span>
+  <span ><i class="fas fa-user-circle"></i></span>
+  
+</div>
+
+<div class="user-options" [ngClass]="{'open-right' : open, 'close-right': !open}">
+
+  <p [routerLink]="['/perfil-usuario']">
+    <span> Perfil de usuario</span>
+    <i class="fas fa-user-edit"></i>
+  </p>
+
+  <p (click)="logout()">  
+    <span>Desconectarse</span> 
+    <i class="fas fa-sign-out-alt"></i> 
+  </p>
+
+</div>

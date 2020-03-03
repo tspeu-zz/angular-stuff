@@ -1,0 +1,35 @@
+<div class="row form-frofile user-profile-page">
+
+    
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 header-page-section">
+        <h1 class="title-app text-align-left">Programa de <b>afiliados</b></h1>
+        <h2 class="title-page">Perfil de usuario</h2>
+    </div>
+    
+    <mat-horizontal-stepper [linear]="true"  #stepper class="col-sm-12">
+        
+        <mat-step [stepControl]="firstFormGroup" color="primary">
+            <ng-template matStepLabel>Datos presonales</ng-template>
+            <div class="card z-depth-2  mt-lg-2 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-2 ">
+                <app-personal-data #firstFormGroup
+                [paises]="countries"
+                    [user]="affiliate"
+                    [countriesInput]="countries"
+                    (stepperFoward)="goForwardStepper(stepper)">
+                </app-personal-data>
+            </div>
+        </mat-step>
+            
+        <mat-step [stepControl]="secondFormGroup">
+            <ng-template matStepLabel>Datos de facturación</ng-template>
+            <div class="card z-depth-2 mt-lg-2 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-2">
+                <app-invoice-data #secondFormGroup
+                    [user]="affiliate"
+                    [countries]="countries">
+                </app-invoice-data>
+            </div>
+        </mat-step>
+    
+    </mat-horizontal-stepper>
+
+</div>

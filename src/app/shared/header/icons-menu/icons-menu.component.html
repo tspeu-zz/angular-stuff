@@ -7,7 +7,7 @@
 <div class="icons-menu no-mobile-icon">
     <div class="icon-alert" *ngFor="let item of iconList">
         <img class="icon-width" (click)="controlNav()" [src]="item.icon" >
-        <div class="number-circle" (click)="controlNav()">
+        <div class="number-circle" (click)="controlNav()" *ngIf="item.notificationNumber || item.notificationNumber ==! 0">
             {{item.notificationNumber}}
         </div>
     </div> 

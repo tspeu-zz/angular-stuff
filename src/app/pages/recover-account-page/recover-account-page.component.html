@@ -4,23 +4,28 @@
         <form class="text-center px-lg-2 pt-4 text-color-input external-form" 
         [formGroup]="recoverForm" (ngSubmit)="onSubmit()" *ngIf="!mailSendOk" >
         
-        <input type="email" class="form-control mb-2 mt-0" placeholder="Email" 
-        formControlName="email" 
-        [ngClass]="{'is-valid': !registerControl.email.errors,
-        'is-invalid': registerControl.email.touched && registerControl.email.errors}" 
-        required/>
+            <input type="email" placeholder="Email" 
+                class="form-control mb-2 mt-0" 
+                formControlName="email" 
+                [ngClass]="{'is-valid': !registerControl.email.errors,
+                'is-invalid': registerControl.email.touched && registerControl.email.errors}" 
+                required/>
+            
+            <div class="d-flex justify-content-start mt-1 login-error-text-panel mb-0 text-left">
+                <small id="errorMessage" class="form-text text-error "
+                    *ngIf="errorSendEmail">  
+                    {{ errorMessage }} 
+                </small>
+            </div>
+            
+            <button class="btn btn-outline-primary btn-rounded btn-block waves-effect mt-0 z-depth-0" 
+                type="submit" [disabled]="!recoverForm.valid">
+                Enviar enlace de recuperación
+            </button>
+            
+            <p class="my-4"><a [routerLink]="['/login']" class="text-color-input">Ir a iniciar sesión</a></p>
         
-        <div class="d-flex justify-content-start mt-1 login-error-text-panel mb-0 text-left">
-            <small id="errorMessage" class="form-text text-error "
-            *ngIf="errorSendEmail">  {{ errorMessage }} </small>
-        </div>
-        
-        <button class="btn btn-outline-primary btn-rounded btn-block waves-effect mt-0 z-depth-0" 
-        type="submit" [disabled]="!recoverForm.valid">Enviar enlace de recuperación</button>
-        
-        <p class="my-4"><a [routerLink]="['/login']" class="text-color-input">Ir a login</a></p>
-        
-    </form>
+        </form>
 
     <div *ngIf="mailSendOk" class="response-success-page">
         <div class="text-center mt-2">
@@ -38,7 +43,7 @@
             <p><span>El mensaje puede tardar varios minutos en llegar.</span></p>
         </div>
             
-        <p class="text-left my-2 ml-4"><a  [routerLink]="['/login']" class="send-again">Ir a login</a></p>
+        <p class="text-left my-2 ml-4"><a  [routerLink]="['/login']" class="send-again">Ir a iniciar sesión</a></p>
 
     </div>
 

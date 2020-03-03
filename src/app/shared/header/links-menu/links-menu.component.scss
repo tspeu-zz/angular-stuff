@@ -3,20 +3,28 @@
 @import 'node_modules/angular-bootstrap-md/assets/scss/bootstrap/variables';
 @import 'node_modules/angular-bootstrap-md/assets/scss/core/mixins';
 @import '../../../../styles/variables.scss';
+
 ::ng-deep .navbar-nav{
   flex-direction: row;
-  height: 54px;
+  height: 53px;
+  
 }
-
+.active{
+  background: $hover-blue-color;
+}
 .custom-nav-item {
-  display:flex;
+  display:flex; 
+ 
   .nav-link {
+    background-color: transparent !important;
     padding: 15px;
+    
   }
+  
 }
 
 .custom-nav-item:hover {
-  background: $light-blue;
+  background: $hover-blue-color;
   cursor:pointer;
 }
 

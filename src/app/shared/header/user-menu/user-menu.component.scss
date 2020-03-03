@@ -1,0 +1,66 @@
+@import 'node_modules/angular-bootstrap-md/assets/scss/core/colors';
+@import 'node_modules/angular-bootstrap-md/assets/scss/bootstrap/functions';
+@import 'node_modules/angular-bootstrap-md/assets/scss/bootstrap/variables';
+@import 'node_modules/angular-bootstrap-md/assets/scss/core/mixins';
+@import '../../../../styles/variables.scss';
+
+.user-icons {
+  display: flex; 
+  justify-content: space-around;
+  color:white;
+  cursor: pointer;
+
+  .name-label{
+    padding: 5px 0 0 10px;
+    display: none;
+    @include media-breakpoint-up(md) {
+      display: inline;
+    }
+  }
+  
+  .fa-user-circle {
+    display: block;
+    font-size: 30px;
+    padding-left: 10px;
+    @include media-breakpoint-down(sm) { 
+      padding: 5px 0 0 10px;
+     
+    }
+  }
+
+  .nav-flex-icons {
+    align-items: center;
+  }
+    
+}
+
+.user-options {
+  z-index: 30;
+  position: absolute;
+  right: 0px;
+  top: 48px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-flow: column;
+  background-color: #03223f;
+  color: white;
+  padding: 10px 10px 0px 10px;
+  
+  p {
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer; 
+  }
+  
+}
+
+.open-right { 
+  color:white;
+}
+
+.close-right {
+  display: none;
+}

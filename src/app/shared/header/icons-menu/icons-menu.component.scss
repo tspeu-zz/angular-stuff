@@ -4,6 +4,19 @@
 @import 'node_modules/angular-bootstrap-md/assets/scss/core/mixins';
 @import '../../../../styles/variables.scss';
 
+
+::ng-deep .dropdown-menu {
+  
+  top: 10px !important;
+  left: -72px !important;
+  right: 25px !important;
+  border-radius: 0px !important;
+  background-color: #03223f;
+  padding-left: 10px;
+  a{
+    color:white !important;
+  }
+}
 .close-right {
   width: 0;
   color: white;
@@ -40,13 +53,12 @@
   align-items: center;
   cursor: pointer;
 
-  .icon-alert{
-    display: flex;
+  .icon-alert{ 
     position: relative;
     transform: scale(0.7);
     margin-right: 3px;
     padding-right: 10px;
-
+    
     .icon-width{
         width: 30px;
     }
@@ -117,6 +129,10 @@
   color:white;
 }
 
+.dropdown-toggle::after {
+  display: none;
+}
+
 @include media-breakpoint-down(sm) { 
   .no-mobile-icon{
       display: none;
@@ -125,7 +141,7 @@
 
 @include media-breakpoint-up(md) { 
     .mobile-icon{
-      display: none;
+      display: none; 
   }
 }
 

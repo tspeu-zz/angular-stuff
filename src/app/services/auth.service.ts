@@ -6,8 +6,8 @@ import {LoginResponse} from '../models/response/login-response';
 import {Router} from '@angular/router';
 import {ResponseBody} from '../models/response/response-body';
 import {JwtService} from './jwt.service';
-import { ResetPassword } from '../models/reset-password.model';
-import {Register} from '../models/register.model';
+import { ResetPassword } from '../models/reset-password';
+import {Register} from '../models/register';
 import {Affiliate} from '../models/affiliate';
 
 @Injectable({
@@ -34,10 +34,6 @@ export class AuthService {
       this.router.navigate(['/login']);
    }
 
-   isAuthenticated(): boolean {
-      return this.jwtService.getAccessToken() != null;
-   }
-
    register(register: Register): Observable<ResponseBody<Affiliate>> {
       return this.http.post<ResponseBody<Affiliate>>(this.authPath + '/register', register, this.httpOptions);
    }
@@ -52,6 +48,10 @@ export class AuthService {
 
    confirmEmail(token: string): Observable<ResponseBody<string>> {
       return this.http.post<ResponseBody<string>>(this.authPath + '/confirmEmail', `"${token}"`, this.httpOptions);
+   }
+
+   registerEmailForward(email: string): Observable<ResponseBody<boolean>> {
+      return this.http.post<ResponseBody<boolean>>(this.authPath + '/RegisterEmailForward', `"${email}"`, this.httpOptions);
    }
 
 }

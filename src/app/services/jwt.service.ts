@@ -5,17 +5,19 @@ import { Injectable } from '@angular/core';
 })
 export class JwtService {
 
+  private readonly accessToken = 'access_token';
+
   constructor() { }
 
    setAccessToken(token: string) {
-      localStorage.setItem('access_token', token);
+      localStorage.setItem(this.accessToken, token);
    }
 
    getAccessToken(): string {
-     return localStorage.getItem('access_token');
+     return localStorage.getItem(this.accessToken);
    }
 
    removeToken(): void {
-      localStorage.removeItem('access_token');
+      localStorage.removeItem(this.accessToken);
    }
 }

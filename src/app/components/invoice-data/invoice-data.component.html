@@ -1,0 +1,158 @@
+<div class="user-profile-form">
+    <div class="card-header text-center">  
+        <i class="far fa-building"></i>
+        <h4> Datos de facturación</h4>
+    </div>
+
+    <div class="card-body row justify-content-center align-items-center">
+        <form class="text-center text-form  col-xl-6 col-lg-6 col-md-8 col-sm-12"
+            [formGroup]="invoiceForm" (ngSubmit)="onSubmitInvoice()">  
+
+            <div class="mb-3 text-color-input">
+                <p class="text-center my-0"> * Tipo de cuenta: </p>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="empresa"
+                        class="custom-control-input"  
+                        value=0 name="companyType"
+                        formControlName="companyType" 
+                        [checked]="checkCompanyType">
+                    <label class="custom-control-label" for="empresa">Empresa</label>
+                </div>
+                
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio"  id="autonomo" 
+                        class="custom-control-input"
+                        value=1 name="companyType"
+                        formControlName="companyType"
+                        [checked]="checkFreelanceType">
+                    <label class="custom-control-label" for="autonomo">Autónomo</label>
+                </div>
+            </div>
+
+            <input type="text" id="company-name" placeholder="* {{ labelCompanyType }}"
+                class="form-control mb-3"  maxlength="100"
+                formControlName="companyName" 
+                [ngClass]="{'is-invalid': invoiceControl.companyName.touched &&  invoiceControl.companyName.errors,
+                'is-valid': !invoiceControl.companyName.errors }"
+                required>
+
+            <input type="text" id="cif" placeholder="* {{ LabelCompany }}" 
+                class="form-control mb-3"  maxlength="15"
+                formControlName="cif" 
+                [ngClass]="{'is-invalid': invoiceControl.cif.touched &&  invoiceControl.cif.errors,
+                'is-valid': invoiceControl.cif.touched ||  !invoiceControl.cif.errors }"
+                required>
+            
+            <input type="text" id="address-invoice" placeholder="* Dirección"  
+                class="form-control mb-3" maxlength="300"
+                formControlName="invoiceAddress"
+                [ngClass]="{'is-invalid': invoiceControl.invoiceAddress.touched &&  invoiceControl.invoiceAddress.errors,
+                'is-valid': invoiceControl.invoiceAddress.touched || !invoiceControl.invoiceAddress.errors }"
+                required>
+
+            <div class="form-row mb-3">
+                <div class="col-6">
+                    <ng-select  required
+                                bindValue="isoCode"
+                                bindLabel="name"
+                                [clearable]="false" 
+                                placeholder="* País"
+                                formControlName="invoiceCountryCode"
+                                class="selected-country"
+                                [items]="countries"
+                                [selectOnTab]="true"
+                                (ngModelChange)="onChangeCountryInvoice($event)">
+                    </ng-select>                    
+                </div>
+                <div class="col-6 selected-country">
+                    <ng-select  required
+                                placeholder="* Provincia"
+                                bindLabel="name"
+                                bindValue="regionCode"
+                                formControlName="invoiceRegionCode"
+                                [items]="regionsInvoice"
+                                [selectOnTab]="true"
+                                [clearable]="false"> 
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="form-row mb-2">
+                <div class="col-4">
+                    <input type="text" id="invoice-postal-code" placeholder="* C. Postal" 
+                        class="form-control"  maxlength="20"
+                        formControlName="invoicePostalCode" 
+                        [ngClass]="{'is-invalid': invoiceControl.invoicePostalCode.touched &&  invoiceControl.invoicePostalCode.errors,
+                        'is-valid': invoiceControl.invoicePostalCode.touched || !invoiceControl.invoicePostalCode.errors }"
+                        required>                 
+                </div>
+
+                <span class="prefix-number">{{prefixCountryInvoice}}</span>
+
+                <div class="col phone-number">
+                    <input type="text" id="invoice-phone" placeholder="* Teléfono" 
+                        class="form-control" maxlength="15"
+                        formControlName="invoicePhone" 
+                        [ngClass]="{'is-invalid': invoiceControl.invoicePhone.touched &&  invoiceControl.invoicePhone.errors,
+                        'is-valid': invoiceControl.invoicePhone.touched ||  !invoiceControl.invoicePhone.errors }"
+                        required>
+                </div>
+            </div>
+                    
+            <div class="line-separation-invoice"></div>
+
+            <p class="text-left mt-0 mb-2"> * Datos bancarios </p>
+            <div formGroupName="ibanForm" class="iban-validator">
+                <div class="form-row mb-3 iban-text">
+                    <div class="col-2 col-2-iban">
+                        <input type="text" id="iban-form" 
+                            class="form-control text-center"  maxlength="4" 
+                            formControlName="ibanCountryCode"
+                            [ngClass]="{'is-invalid': invoiceForm.get('ibanForm.ibanCountryCode').touched && invoiceForm.get('ibanForm.ibanCountryCode').errors,
+                            'is-valid': invoiceForm.get('ibanForm.ibanCountryCode').touched && !invoiceForm.get('ibanForm.ibanCountryCode').errors}"
+                            required>
+                    </div>
+                    <div class="col-2 col-2-iban">
+                        <input type="text" id="iban-entity"
+                            class="form-control text-center"  maxlength="4" 
+                            formControlName="ibanEntity"
+                            [ngClass]="{'is-invalid': invoiceForm.get('ibanForm.ibanEntity').touched && invoiceForm.get('ibanForm.ibanEntity').errors,
+                            'is-valid': invoiceForm.get('ibanForm.ibanEntity').touched && !invoiceForm.get('ibanForm.ibanEntity').errors}"
+                            required>
+                    </div>
+                    <div class="col-2 col-2-iban">
+                        <input type="text" id="iban-office"
+                            class="form-control text-center" maxlength="4" 
+                            formControlName="ibanOffice"
+                            [ngClass]="{'is-invalid': invoiceForm.get('ibanForm.ibanOffice').touched && invoiceForm.get('ibanForm.ibanOffice').errors,
+                            'is-valid':  invoiceForm.get('ibanForm.ibanOffice').touched && !invoiceForm.get('ibanForm.ibanOffice').errors}"
+                            required>
+                    </div>
+                    <div class="col-2 col-2-iban">
+                        <input type="text" id="iban-control-digit"
+                            class="form-control text-center" maxlength="2"
+                            formControlName="ibanControlDigit"
+                            [ngClass]="{'is-invalid': invoiceForm.get('ibanForm.ibanControlDigit').touched && invoiceForm.get('ibanForm.ibanControlDigit').errors,
+                            'is-valid':  invoiceForm.get('ibanForm.ibanControlDigit').touched && !invoiceForm.get('ibanForm.ibanControlDigit').errors}"
+                            required>
+                    </div>
+                    <div class="col-4 col-2-iban">
+                        <input type="text" id="iban-account-number"
+                            class="form-control text-center" maxlength="10"
+                            formControlName="ibanAccountNumber"
+                            [ngClass]="{'is-invalid': invoiceForm.get('ibanForm.ibanAccountNumber').touched && invoiceForm.get('ibanForm.ibanAccountNumber').errors,
+                            'is-valid':  invoiceForm.get('ibanForm.ibanAccountNumber').touched && !invoiceForm.get('ibanForm.ibanAccountNumber').errors}"
+                            required>
+                    </div>
+                </div>
+            </div>
+
+            <span class="text-center mb-0 text-size-info"> * Campos obligatorios: </span>
+            
+            <button class="btn mt-3 btn-block waves-effect mb-4" type="submit"
+                    [disabled]="!invoiceForm.valid "> {{ labelSaveButton }}
+            </button> 
+
+        </form>
+    </div>
+</div>

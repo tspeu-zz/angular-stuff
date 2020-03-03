@@ -5,7 +5,7 @@
   width: 0; 
   position: fixed;
   z-index: 10;
-  top: 46px; 
+  top: 48px; 
   left: 0;
   background-color: $nav-blue; 
   overflow-x: hidden;
@@ -13,7 +13,15 @@
 
   .link{
     display: block;
-    padding: 20px 0 0 20px;
+    padding: 10px 20px 10px 20px;
+    color: white;
+  }
+  .active{
+    background: $hover-blue-color;
+  }
+  .link:hover{
+    background: $hover-blue-color;
+    cursor:pointer;
   }
 }
 

@@ -15,4 +15,5 @@ export class Affiliate {
    comissionPercent: number;
    personalData: PersonalData;
    invoiceData: InvoiceData;
+   firstVisit: boolean;
 }

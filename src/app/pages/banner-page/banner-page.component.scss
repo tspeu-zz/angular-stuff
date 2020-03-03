@@ -1,0 +1,84 @@
+@import "../../../styles/variables";
+@import "../../../styles/main-layaout";
+@import "../../../styles/pagination-controls";
+@import "../../../styles/mdboostrap-imports";
+
+.banner-page {
+  margin: 20px 0;
+  .search-card {
+    margin: 10px 0;
+    .filter-search,
+    .text-search-section {
+      margin: 5px 0;
+      .text-search{
+        font-weight: 300;
+      }
+      ::-webkit-input-placeholder {
+        color: #858b8e;
+      }
+      ::-moz-placeholder {
+        color: #858b8e;
+      }
+      :-ms-input-placeholder {
+        color: #858b8e;
+      }
+      :-moz-placeholder {
+        color: #858b8e;
+      }
+
+    }
+    .search-button-section {
+      text-align: center;
+      margin: 5px 0;
+      .search-button {
+        border-radius: 4px;
+        padding: 10px 50px;
+        background-color: $light-blue-button;
+        color: #ffffff;
+        width: 100%;
+        margin: 0;
+        text-transform: initial;
+      }
+    }
+  }
+
+  .results-card {
+    margin: 10px 0;
+    .loading {
+      height: 100px;
+      justify-content: center;
+    }
+    .list-item-courses {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      @include media-breakpoint-up(md) {
+        flex-direction: row;
+        text-align: left;
+      }
+
+      .copy-link-button {
+        border-radius: 4px;
+        padding: 10px 20px;
+        color: #51c1cf;
+        border: 2px solid #51c1cf;
+        background-color: transparent;
+        width: 150px;
+        text-transform: initial;
+      }
+    }
+
+    .no-results {
+      min-height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $light-blue;
+      i {
+        padding-right: 7px;
+      }
+    }
+  }
+}

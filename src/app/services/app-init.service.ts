@@ -13,24 +13,32 @@ export class AppInitService {
 
   constructor(private jwtService: JwtService,
               private affiliatesService: AffiliatesService,
-              private userService: UserService<Affiliate>) { }
+              private userService: UserService<Affiliate>) {
+  }
 
-   Init() {
-      return new Promise<void>((resolve, reject) => {
-         const token = this.jwtService.getAccessToken();
-         if (token !== null) {
-            const decodeToken = JwtDecode(token);
-            this.affiliatesService.getByCode(decodeToken.Code).subscribe(response => {
-               if (response.success) {
-                  this.userService.setUserData(response.data);
-               }
-               resolve();
-            }, error => {
-               resolve();
-            });
-         } else {
-            resolve();
-         }
-      });
-   }
+  Init() {
+    return new Promise<void>((resolve, reject) => {
+      const token = this.jwtService.getAccessToken();
+      if (token !== null) {
+        try {
+          const decodeToken = JwtDecode(token);
+          this.affiliatesService.getByCode(decodeToken.Code).subscribe(response => {
+            if (response.success) {
+              this.userService.setUserData(response.data);
+              resolve();
+            } else {
+              this.removeTokenAndResolve(resolve);
+            }
+          }, () => this.removeTokenAndResolve(resolve));
+        } catch (e) { this.removeTokenAndResolve(resolve); }
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  private removeTokenAndResolve(resolve: (value?: (PromiseLike<void> | void)) => void) {
+    this.jwtService.removeToken();
+    resolve();
+  }
 }

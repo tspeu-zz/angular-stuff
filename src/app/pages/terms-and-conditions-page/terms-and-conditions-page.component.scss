@@ -1,0 +1,13 @@
+.square{
+  margin-top: 80px;
+  padding: 20px;
+  border: 9px double #3F41A4;
+  border-radius: 13px;
+  .important{
+    font-weight: bold;
+    .title{
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
+}

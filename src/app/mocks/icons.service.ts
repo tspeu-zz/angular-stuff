@@ -5,16 +5,14 @@ import { Icon } from '../models/icon';
   providedIn: 'root'
 })
 export class IconsService {
-  iconList: Icon[];
-  icon: Icon;
-  icon1: Icon;
-  icon2: Icon;
-  icon3: Icon;
+  icons: Icon[];
   constructor() { }
 
   getIcons(): Icon[] {
-    this.icon = {label: 'Prueba', notificationNumber: 1, icon:  '../../../../assets/img/blue-bell.svg'};
-    this.iconList = [this.icon];
-    return this.iconList;
+    this.icons = [
+    {label: 'Prueba', notificationNumber: 1, icon:  '../../../../assets/img/blue-bell.svg'},
+    {label: 'Prueba', notificationNumber: 0, icon:  '../../../../assets/img/blue-bell.svg'},
+    {label: 'Prueba', notificationNumber: 3, icon:  '../../../../assets/img/blue-bell.svg'}];
+    return this.icons;
   }
 }

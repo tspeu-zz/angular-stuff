@@ -1,0 +1,13 @@
+@import "./src/styles/variables";
+@import "./src/styles/full-page-layout";
+@import "./src/styles/main-layaout";
+
+
+
+.user-profile-page {
+  .header-page-section {
+      padding: {
+        bottom: 15px;
+      }
+    }
+}

@@ -8,20 +8,9 @@
   </mdb-navbar-brand>
 
   <app-links-menu class="links" [linksList]="linksList"></app-links-menu>
-  
   <div class="user-icons">
-      <app-icons-menu [iconList]="iconList" class="icons"></app-icons-menu>
-      <ul class="navbar-nav nav-flex-icons">
-        <li class="nav-item" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-            <span class="name-label">{{user.name}} {{user.surname}}</span>
-            <span><i class="fas fa-user-circle"></i></span>
-          </a>
-          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary move-position" role="menu">
-            <a (click)="logout()" class="dropdown-item waves-light user-menu" mdbWavesEffect>Desconectarse <i class="fas fa-sign-out-alt"></i></a>
-          </div>
-        </li>
-      </ul>
+    <app-icons-menu [iconList]="iconList" class="icons"></app-icons-menu>
+    <app-user-menu [user]="user"></app-user-menu>
   </div>
   
 </mdb-navbar>

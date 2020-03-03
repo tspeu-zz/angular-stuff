@@ -4,11 +4,11 @@ import { AuthService } from '../../services/auth.service';
 import { JwtService } from '../../services/jwt.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {AffiliatesService} from '../../services/affiliates.service';
+import { AffiliatesService } from '../../services/affiliates.service';
 import { RecoverAccountService } from 'src/app/services/recover-account.service';
-import { CustomvalidationService } from 'src/app/providers/custom-validation.service';
-import {UserService} from '../../services/user.service';
-import {Affiliate} from '../../models/affiliate';
+import { CustomvalidationService } from 'src/app/validators/custom-validation.service';
+import { UserService } from '../../services/user.service';
+import { Affiliate } from '../../models/affiliate';
 
 @Component({
   selector: 'app-login-page',
@@ -21,20 +21,15 @@ export class LoginPageComponent implements OnInit {
   loginForm: FormGroup;
   errorLogin = false;
   errorMessage = '';
-  private readonly keyLocalStorage = 'user-credential';
+  private readonly keyLocalStorage = 'user_credential';
   affiliate: Affiliate;
 
   constructor(private authService: AuthService, private jwt: JwtService, private router: Router, private formBuilder: FormBuilder,
-              private affiliatesService: AffiliatesService, private recoverService: RecoverAccountService,
-              private customValidator: CustomvalidationService, private userService: UserService<Affiliate>) {
-
-    if (this.jwt.getAccessToken() != null) {
-      this.router.navigate(['/']);
-    }
-  }
+    private affiliatesService: AffiliatesService, private recoverService: RecoverAccountService,
+    private customValidator: CustomvalidationService, private userService: UserService<Affiliate>) { }
 
   ngOnInit(): void {
-    this.createLoginForm() ;
+    this.createLoginForm();
   }
 
   onSubmit() {
@@ -45,27 +40,53 @@ export class LoginPageComponent implements OnInit {
         this.userService.setUserData(response.data.affiliate);
 
         this.affiliate = this.userService.getUserValue();
-        if (this.affiliate.personalData !== null || this.affiliate.invoiceData !== null) {
-          this.router.navigate(['/']);
-        } else {
-          this.router.navigate(['/bienvenida']);
-        }
+        this.affiliate.personalData = {
+          nationality: 'ES',
+          dni: 'C11111111D',
+          address: 'calle vieja 500, 1ro 2da.',
+          countryCode: 'ES',
+          regionCode: '53',
+          postalCode: '90001',
+          phone: '444444',
+        };
+        this.affiliate.invoiceData = {
+          companyType: 0,
+          companyName: 'ACME INC.',
+          cif: '0000001234',
+          address: 'AV. nueva 100',
+          countryCode: 'ES',
+          regionCode: '07',
+          postalCode: '91001',
+          phone: '111111',
+          iban: 'ES1234567890123456789012',
+        };
+        this.affiliate.firstVisit = false;
+
+        console.log('this.affiliate', this.affiliate);
+
+
+
+
+        this.router.navigate(['/bienvenida']);
+        // if (this.affiliate.firstVisit) {
+        //   this.router.navigate(['/bienvenida']);
+        // } else {
+        //   this .router.navigate(['/']);
+        // }
       } else {
-        this.errorLogin = true;
-        this.errorMessage = 'Usuario o contraseña incorrectos';
+        this.showtErrorMessage();
       }
     }, error => {
-      this.errorLogin = true;
-      this.errorMessage = 'Usuario o contraseña incorrectos';
+      this.showtErrorMessage();
     });
   }
 
   get loginControls() {
-      return this.loginForm.controls;
+    return this.loginForm.controls;
   }
 
   private getPassword() {
-      return this.loginForm.get('password').value;
+    return this.loginForm.get('password').value;
   }
 
   private getUserCodeOrEmail() {
@@ -80,11 +101,11 @@ export class LoginPageComponent implements OnInit {
     });
 
     if (this.checkLocalStorage()) {
-      this.loginForm.patchValue({ codeOrEmail: this.getLocalSession(this.keyLocalStorage) });
-      this.loginForm.patchValue({checkRemember : true});
+      this.loginForm.patchValue({ codeOrEmail: localStorage.getItem(this.keyLocalStorage) });
+      this.loginForm.patchValue({ checkRemember: true });
     }
 
-    this.emailControl() ;
+    this.emailControl();
   }
 
   private getCheckSession() {
@@ -92,9 +113,9 @@ export class LoginPageComponent implements OnInit {
   }
 
   emailControl() {
-    const emailControl =  this.loginForm.controls.codeOrEmail;
+    const emailControl = this.loginForm.controls.codeOrEmail;
     emailControl.valueChanges.subscribe(() => {
-      if (emailControl.value === '' ) {
+      if (emailControl.value === '') {
         emailControl.setValidators = null;
         this.errorLogin = false;
       }
@@ -105,16 +126,8 @@ export class LoginPageComponent implements OnInit {
     localStorage.removeItem(this.keyLocalStorage);
   }
 
-  private setLocalSession(key: string, value: string) {
-    localStorage.setItem(key, value);
-  }
-
-  private getLocalSession(key: string) {
-    return localStorage.getItem(key);
-  }
-
   private checkLocalStorage() {
-    return this.getLocalSession(this.keyLocalStorage) !== null;
+    return localStorage.getItem(this.keyLocalStorage) !== null;
   }
 
   setUserEmail() {
@@ -124,10 +137,15 @@ export class LoginPageComponent implements OnInit {
   saveUserCodeOrEmail(): void {
     this.errorLogin = false;
     if (this.getCheckSession()) {
-      this.setLocalSession(this.keyLocalStorage, this.getUserCodeOrEmail());
+      localStorage.setItem(this.keyLocalStorage, this.getUserCodeOrEmail());
     } else {
       this.cleanLocalCredential();
     }
+  }
+
+  showtErrorMessage(): void {
+    this.errorLogin = true;
+    this.errorMessage = 'Usuario o contraseña incorrectos';
   }
 
 }

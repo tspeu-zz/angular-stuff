@@ -1,6 +1,5 @@
 export class Icon {
     label: string;
-    notificationNumber: number;
+    notificationNumber?: number;
     icon: string;
-
 }

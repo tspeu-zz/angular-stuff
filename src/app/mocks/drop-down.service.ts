@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { DropDown, Element } from 'src/app/models/Dropdown';
+import { Dropdown, Element } from 'src/app/models/dropdown';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DropDownService {
-  dropDown: DropDown;
+  dropDown: Dropdown;
   element: Element;
   element1: Element;
   constructor() { }
 
-  getDropDown(): DropDown {
+  getDropDown(): Dropdown {
     this.element = {icon: '../../../../assets/img/blue-bell.svg', text: 'información'};
     this.element1 = {icon: '../../../../assets/img/blue-bell.svg', text: 'Desconectarse'};
     this.dropDown = {

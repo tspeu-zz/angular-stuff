@@ -2,9 +2,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ExternalLayoutConfig } from 'src/app/models/config/external-layout-config';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { CustomvalidationService } from 'src/app/providers/custom-validation.service';
+import { CustomvalidationService } from 'src/app/validators/custom-validation.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { ResetPassword } from '../../models/reset-password.model';
+import { ResetPassword } from '../../models/reset-password';
 
 @Component({
   selector: 'app-reset-password',

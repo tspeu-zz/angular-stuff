@@ -4,11 +4,16 @@
 
 export const environment = {
    production: false,
-   affiliatesApiUrl: 'https://tech-affiliates-api-dev.azurewebsites.net/api/',
+   affiliatesApiUrl: 'https://api-affiliates-program-test.azurewebsites.net/api/',
+   // affiliatesApiUrl: 'https://localhost:5001/api/',
+   courseApi: 'https://tech-course-api.azurewebsites.net/api/',
    cdnUrl: 'https://cdn.techtitute.com/techtitute/',
+   geoApiUrl : 'https://api-geoapi-test.azurewebsites.net/api/',
    jwt: {
-      whiteListedDomains: ['https://tech-affiliates-api-dev.azurewebsites.net/'],
-      blackListedRoutes:  ['https://tech-affiliates-api-dev.azurewebsites.net/auth/']
+      whiteListedDomains: ['api-affiliates-program-test.azurewebsites.net'/*, 'localhost:5001'*/],
+      blackListedRoutes:  ['api-affiliates-program-test.azurewebsites.net/api/auth/', /*'localhost:5001/api/auth/',*/
+                           'tech-course-api.azurewebsites.net',
+                           'api-geoapi-test.azurewebsites.net']
    }
 };
 

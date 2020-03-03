@@ -4,9 +4,9 @@ import { ExternalLayoutConfig } from '../../../models/config/external-layout-con
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Register } from 'src/app/models/register.model';
+import { Register } from 'src/app/models/register';
 import { Affiliate } from 'src/app/models/affiliate';
-import { CustomvalidationService } from '../../../providers/custom-validation.service';
+import { CustomvalidationService } from '../../../validators/custom-validation.service';
 import {AuthService} from '../../../services/auth.service';
 
 
@@ -26,6 +26,7 @@ export class RegisterPageComponent {
   sendingForm = false;
   registerError = false;
   errorMessage = '';
+  isCreatedAccount = false;
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService,
               private customValidator: CustomvalidationService) {
@@ -68,12 +69,12 @@ export class RegisterPageComponent {
           this.affiliate = res.data;
           this.sendingForm = false;
           this.registerError = false;
-          this.router.navigate(['/cuenta-creada']);
+          this.isCreatedAccount = true;
         } else {
-          this.setErrorMessage();
+          this.showtErrorMessage();
         }
       }, error => {
-          this.setErrorMessage();
+          this.showtErrorMessage();
         }
       );
   }
@@ -90,9 +91,10 @@ export class RegisterPageComponent {
 
   private registerFormInit() {
       this.registerForm = this.fb.group({
-         email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/)]],
-         name: ['', Validators.required],
-         surName: ['', Validators.required],
+         email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/),
+                      Validators.maxLength(100)]],
+         name: ['', [Validators.required, Validators.maxLength(100)]],
+         surName: ['', [Validators.required, Validators.maxLength(100)]],
          password: ['',
           Validators.compose([Validators.required, Validators.minLength(8),
               Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)])
@@ -102,11 +104,14 @@ export class RegisterPageComponent {
       }, { validator: this.customValidator.MustMatch('password', 'confirmPassword') });
   }
 
-  setErrorMessage() {
+  showtErrorMessage() {
     this.registerError = true;
     this.sendingForm = false;
     this.errorMessage = 'Error al crear la cuenta, inténtelo de nuevo más tarde';
   }
 
+    emailForward() {
+      setTimeout( () => this.authService.registerEmailForward(this.getEmail()).subscribe(), 2000);
+    }
 }
 
