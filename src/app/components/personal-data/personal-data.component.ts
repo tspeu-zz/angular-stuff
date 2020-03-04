@@ -4,11 +4,9 @@ import { Affiliate } from 'src/app/models/affiliate';
 import { PersonalData } from 'src/app/models/personal-data';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AffiliatesService } from 'src/app/services/affiliates.service';
-import { Country } from 'src/app/models/country';
+import { GeoCountry } from 'src/app/models/geo-country';
 import { Region } from 'src/app/models/region';
-import { BehaviorSubject } from 'rxjs';
 import { SharePersonalData } from 'src/app/models/share-personal-data';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-personal-data',
@@ -17,19 +15,8 @@ import { map } from 'rxjs/operators';
 })
 export class PersonalDataComponent implements OnInit, OnChanges {
 
-  // private countriesData = new BehaviorSubject<Country[]>([]);
-  // @Input() set countries(countries: Country[]) {
-  //   this.countriesData.next(countries);
-  // }
-
-  // get countries() {
-  //   return this.countriesData.getValue();
-  // }
-  @Input() countriesInput: BehaviorSubject<Country[]>;
-  countries: Country[] = [];
-  @Input() paises: Country[];
-
-  @Input() user: BehaviorSubject<Affiliate>;
+  @Input() countries: GeoCountry[] = [];
+  @Input() user: Affiliate;
   @Input() sharePersonalData: boolean;
   @Input() showPrivacyPolicy: boolean;
   @Output() sendPersonalData = new EventEmitter<SharePersonalData>();
@@ -48,34 +35,36 @@ export class PersonalDataComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private affiliatesService: AffiliatesService) {
     this.initWelcomeForm();
+    console.log('init');
   }
 
   ngOnInit() {
     this.onChangeCheck();
     this.onChangeForm();
-    console.log(this.countries);
-    console.log(this.countriesInput);
+
+    console.log('init');
   }
 
   ngOnChanges(SimpleChanges) {
     console.log(SimpleChanges);
     if (this.user) {
-      this.affiliate = this.user.getValue();
-    }
-    console.log(this.countries);
-    console.log(this.countriesInput);
-    if (SimpleChanges.countriesInput && SimpleChanges.countriesInput.currentValue.length > 0) {
-      console.log(this.countriesInput);
-      // this.loadAffiliatePersonalData(this.affiliate.firstVisit);
+      this.affiliate = this.user;
+      // this.setRegionsByCountry(this.affiliate.personalData.countryCode);
     }
 
-    if (SimpleChanges.paises && SimpleChanges.paises.currentValue.length > 0) {
-      this.countries = this.paises;
-      console.log(this.paises);
+    if (SimpleChanges.countries && SimpleChanges.countries.currentValue.length > 0) {
       this.loadAffiliatePersonalData(this.affiliate.firstVisit);
+      this.countries.filter(c => c.isoCode === this.affiliate.personalData.countryCode)
+        .map(co => {
+          this.regions = co.regions;
+          this.prefixCountry = this.formatPrefixNumber(co.phone);
+
+          this.setPostalCodeValidatorByCountry(co.postalCodeRegex);
+        });
+      this.welcomeForm.patchValue({ regionCode: this.affiliate.personalData.regionCode });
 
     }
-
+    console.log(SimpleChanges);
   }
 
   onChangeCheck() {
@@ -127,18 +116,24 @@ export class PersonalDataComponent implements OnInit, OnChanges {
   }
 
   onSubmitPersonalData() {
+
     this.getFormPersonalData();
 
-    this.affiliatesService.updatePersonalData(this.affiliate.id, this.personalData)
-      .subscribe(res => {
-        if (res.success) {
-          this.affiliate.personalData = this.personalData;
-          this.userService.setUserData(this.affiliate);
-          if (this.affiliate.firstVisit) {
-            this.stepperFoward.emit(true);
+    if (this.affiliate.firstVisit) {
+      this.affiliate.personalData = this.personalData;
+      this.userService.setUserData(this.affiliate);
+      this.stepperFoward.emit(true);
+      console.log('->BIENVENIDA->', this.affiliate);
+    } else {
+      this.affiliatesService.updatePersonalData(this.affiliate.id, this.personalData)
+        .subscribe(res => {
+          if (res.success) {
+            this.affiliate.personalData = this.personalData;
+            this.userService.setUserData(this.affiliate);
+            console.log('->PERFIL->', this.affiliate);
           }
-        }
-      });
+        });
+    }
   }
 
   getFormPersonalData(): PersonalData {

@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { AffiliatesService } from 'src/app/services/affiliates.service';
 import { UserService } from 'src/app/services/user.service';
 import { Affiliate } from 'src/app/models/affiliate';
-import { Country } from 'src/app/models/country';
+import { GeoCountry } from 'src/app/models/geo-country';
 import { SharePersonalData } from 'src/app/models/share-personal-data';
 import { InvoiceData } from 'src/app/models/invoice-data';
 import { Region } from 'src/app/models/region';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-invoice-data',
@@ -17,8 +17,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class InvoiceDataComponent implements OnInit, OnChanges {
 
-  @Input() user: BehaviorSubject<Affiliate>;
-  @Input() countries: Country[];
+  // @Input() user: BehaviorSubject<Affiliate>;
+  @Input() user: Affiliate;
+  @Input() countries: GeoCountry[];
   @Input() personalData: SharePersonalData;
 
   invoiceForm: FormGroup;
@@ -37,8 +38,8 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
   labelSaveButton = 'Continuar';
 
   constructor(private userService: UserService<Affiliate>,
-              private fb: FormBuilder, private router: Router,
-              private affiliatesService: AffiliatesService) {
+    private fb: FormBuilder, private router: Router,
+    private affiliatesService: AffiliatesService) {
     this.initInvoiceForm();
   }
 
@@ -50,12 +51,23 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
 
   ngOnChanges(SimpleChanges): void {
     if (this.user) {
-        this.affiliate =  this.user.getValue();
-        this.setButtonLabel(this.affiliate.firstVisit);
+      this.affiliate = this.user;
+      this.setButtonLabel(this.affiliate.firstVisit);
     }
 
-    if (SimpleChanges.countries &&  SimpleChanges.countries.currentValue.length > 0) {
-        this.loadAffiliateInvoiceData(this.affiliate.firstVisit);
+    if (SimpleChanges.countries && SimpleChanges.countries.currentValue.length > 0) {
+      this.loadAffiliateInvoiceData(this.affiliate.firstVisit);
+      this.countries.filter(c => c.isoCode === this.affiliate.invoiceData.countryCode)
+        .map(co => {
+          this.regionsInvoice = co.regions;
+          this.prefixCountryInvoice = this.formatPrefixNumber(co.phone);
+
+          this.setPostalCodeValidatorByCountry(co.postalCodeRegex);
+        });
+      this.invoiceForm.patchValue({
+        invoiceRegionCode: this.affiliate.invoiceData.regionCode,
+        companyType: this.affiliate.invoiceData.companyType
+      });
     }
     if (this.personalData) {
       this.bindPersonalDataToInvoice(this.personalData);
@@ -105,15 +117,31 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
 
   onSubmitInvoice() {
     this.getInvoiceFormValue();
+    if (this.affiliate.firstVisit) {
+      forkJoin(
+        this.affiliatesService.updatePersonalData(this.affiliate.id, this.affiliate.personalData),
+        this.affiliatesService.updateInvoiceData(this.affiliate.id, this.affiliateInvoiceData))
+        .subscribe(([personalResp, invoiceResp]) => {
 
-    this.affiliatesService.updateInvoiceData(this.affiliate.id, this.affiliateInvoiceData)
-      .subscribe(res => {
-        if (res.success) {
-          this.affiliate.invoiceData = this.affiliateInvoiceData;
-          this.userService.setUserData(this.affiliate);
-          this .router.navigate(['/']);
-        }
-      });
+          if (personalResp.success && invoiceResp.success) {
+            this.affiliate.invoiceData = this.affiliateInvoiceData;
+            this.affiliate.firstVisit = false;
+            this.userService.setUserData(this.affiliate);
+            this.router.navigateByUrl('/dashboard');
+
+          }
+        });
+    } else {
+
+      this.affiliatesService.updateInvoiceData(this.affiliate.id, this.affiliateInvoiceData)
+        .subscribe(res => {
+          if (res.success) {
+            this.affiliate.invoiceData = this.affiliateInvoiceData;
+            this.userService.setUserData(this.affiliate);
+          }
+        });
+    }
+
   }
 
   getInvoiceFormValue(): InvoiceData {
@@ -148,7 +176,7 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
   clearInvoiceData(): void {
     this.prefixCountryInvoice = '';
     this.invoiceForm.patchValue({
-      companyType: null,
+      companyType: 0,
       companyName: null,
       cif: null,
       invoiceAddress: null,
@@ -181,9 +209,9 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
   setPostalCodeValidatorByCountry(regexPostalCodeInvoice: string): void {
     const postalCodeControl = this.invoiceForm.get('invoicePostalCode');
     if (regexPostalCodeInvoice !== null) {
-        postalCodeControl.setValidators([Validators.pattern(regexPostalCodeInvoice), Validators.required]);
+      postalCodeControl.setValidators([Validators.pattern(regexPostalCodeInvoice), Validators.required]);
     } else {
-        postalCodeControl.setValidators([Validators.required, Validators.minLength(3)]);
+      postalCodeControl.setValidators([Validators.required, Validators.minLength(3)]);
     }
     postalCodeControl.updateValueAndValidity();
 
@@ -245,7 +273,7 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
   }
 
   setButtonLabel(isWelcomePage: boolean) {
-    this.labelSaveButton = isWelcomePage ?  'Continuar'  : 'Guardar';
+    this.labelSaveButton = isWelcomePage ? 'Continuar' : 'Guardar';
   }
 
 }

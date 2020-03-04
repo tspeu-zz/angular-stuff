@@ -6,19 +6,20 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class UserService<T> {
 
-   private user: BehaviorSubject<T> = new BehaviorSubject<T>(undefined);
+  private user: BehaviorSubject<T> = new BehaviorSubject<T>(undefined);
 
-  constructor() { }
+  constructor() {
+  }
 
-   getUserData(): Observable<T> {
-      return this.user;
-   }
+  getUserData(): Observable<T> {
+    return this.user;
+  }
 
-   setUserData(user: T) {
-      this.user.next(user);
-   }
+  setUserData(user: T) {
+    this.user.next(user);
+  }
 
-   getUserValue(): T {
-      return this.user.getValue();
-   }
+  getUserValue(): T {
+    return this.user.getValue();
+  }
 }

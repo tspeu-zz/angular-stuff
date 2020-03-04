@@ -28,6 +28,7 @@
                         bindLabel="name"                    
                         bindValue="isoCode"
                         formControlName="nationality"
+                        [loading]="countries.length === 0"
                         [items]="countries"
                         [selectOnTab]="true"
                         [clearable]="false">
@@ -59,6 +60,7 @@
                                 bindValue="isoCode"
                                 formControlName="countryCode"
                                 [items]="countries"
+                                [loading]="countries.length === 0"
                                 [selectOnTab]="true"
                                 [clearable]="false" 
                                 (ngModelChange)="onChangeCountry($event)">
@@ -106,9 +108,9 @@
                 *ngIf="showPrivacyPolicy">   
                 <div class="form-row accept-conditions justify-content-end align-items-end">
                     <div class="col">
-                        <label class="text-left mr-2" for="accept">* He leído y acepto
+                        <label class="text-left mr-2" for="accept">* He leído y acepto la
                             <a (click)="basicModal.show()" class="text-left mr-2">
-                                Política de privacidad y uso de datos:</a>
+                                <strong>Política de privacidad y uso de datos: </strong></a>
                             <input type="checkbox" id="accept" class="ml-1 accept-conditions"
                             formControlName="accept" required>
                         </label>

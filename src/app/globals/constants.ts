@@ -1,6 +1,5 @@
 export class Constants {
    public static WHITE_LOGO_TECH = 'https://cdn.techtitute.com/techtitute/assets/logos/tech-universidad-tecnologica-white.svg';
-   public static HOST_TECH = 'https://www.techtitute.com';
    public static DEFAULT_COUNTRY_CODE = 'ES';
 }
 

@@ -9,12 +9,12 @@ import { Footer } from 'src/app/models/footer';
 export class FooterComponent {
 
   @Input() footerConfiguration: Footer;
+  @Input() appVersion: string;
 
   constructor() { }
 
   footerText(): string {
-    const footerText: string = this.footerConfiguration.country + ' | ';
-    return footerText + [
+    return [(this.footerConfiguration.country) ? this.footerConfiguration.country + ' | ' : '',
       '<strong>' + this.footerConfiguration.copyright,
       this.footerConfiguration.year ,
       this.footerConfiguration.business + '</strong>',

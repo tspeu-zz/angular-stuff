@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { ResponseCountry } from './../models/response/response-country';
-import { Country } from '../models/country';
+import { ResponseGeoApi } from '../models/response/response-geo-api';
+import { GeoCountry } from '../models/geo-country';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -11,20 +11,17 @@ import { environment } from '../../environments/environment';
 export class CountryService {
 
     private readonly geoApiUrl = environment.geoApiUrl + 'country';
-    private countriesData = new BehaviorSubject<Country[]>([]);
-    private countrieStore: { countries: Country[] } = { countries: [] };
-
-    httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json'
-        })
-    };
+    private countriesData = new BehaviorSubject<GeoCountry[]>([]);
+    private countriesStore: { countries: GeoCountry[] } = { countries: [] };
+    private geoCountries: GeoCountry[];
 
     constructor(private http: HttpClient) {}
 
-    getCountries(): Observable<ResponseCountry<Country>> {
-
-        return this.http.get<ResponseCountry<Country>>(this.geoApiUrl + '?LanguageCode=es&LanguageVariant=es', this.httpOptions);
+    getCountries(): Observable<ResponseGeoApi<GeoCountry[]>> {
+      const params = new HttpParams()
+          .set('LanguageCode', 'ES')
+          .set('LanguageVariant', 'ES');
+      return this.http.get<ResponseGeoApi<GeoCountry[]>>(this.geoApiUrl, { params });
     }
 
     get countries() {
@@ -36,12 +33,21 @@ export class CountryService {
         this.getCountries()
         .subscribe(
             res => {
-                this.countrieStore.countries = res.response;
-                this.countriesData.next(Object.assign({}, this.countrieStore).countries);
+                this.countriesStore.countries = res.response;
+                this.countriesData.next(Object.assign({}, this.countriesStore).countries);
                 },
                 error => {
                     console.log('Error load Countries, ', error);
                 }
             );
     }
+
+    getGeoCountries(): GeoCountry[] {
+      return this.geoCountries;
+    }
+
+    setGeoCountries(countries: GeoCountry[]) {
+      this.geoCountries = countries;
+    }
+
 }

@@ -12,9 +12,8 @@
             <ng-template matStepLabel>Datos presonales</ng-template>
             <div class="card z-depth-2  mt-lg-2 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-2 ">
                 <app-personal-data #firstFormGroup
-                [paises]="countries"
                     [user]="affiliate"
-                    [countriesInput]="countries"
+                    [countries]="countries"
                     (stepperFoward)="goForwardStepper(stepper)">
                 </app-personal-data>
             </div>

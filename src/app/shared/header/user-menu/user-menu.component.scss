@@ -37,7 +37,7 @@
 .user-options {
   z-index: 30;
   position: absolute;
-  right: 0px;
+  right: 0;
   top: 48px;
   display: -webkit-box;
   display: flex;
@@ -46,13 +46,14 @@
   flex-flow: column;
   background-color: #03223f;
   color: white;
-  padding: 10px 10px 0px 10px;
+  padding: 15px 15px 0 15px;
   
   p {
     width: 150px;
     display: flex;
     justify-content: space-between;
-    cursor: pointer; 
+    align-items: center;
+    cursor: pointer;
   }
   
 }

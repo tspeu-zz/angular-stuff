@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AffiliatesService } from '../../services/affiliates.service';
 import { RecoverAccountService } from 'src/app/services/recover-account.service';
-import { CustomvalidationService } from 'src/app/validators/custom-validation.service';
 import { UserService } from '../../services/user.service';
 import { Affiliate } from '../../models/affiliate';
 
@@ -25,11 +24,11 @@ export class LoginPageComponent implements OnInit {
   affiliate: Affiliate;
 
   constructor(private authService: AuthService, private jwt: JwtService, private router: Router, private formBuilder: FormBuilder,
-    private affiliatesService: AffiliatesService, private recoverService: RecoverAccountService,
-    private customValidator: CustomvalidationService, private userService: UserService<Affiliate>) { }
+              private affiliatesService: AffiliatesService, private recoverService: RecoverAccountService,
+              private userService: UserService<Affiliate>) { }
 
   ngOnInit(): void {
-    this.createLoginForm();
+    this.createLoginForm() ;
   }
 
   onSubmit() {
@@ -40,39 +39,19 @@ export class LoginPageComponent implements OnInit {
         this.userService.setUserData(response.data.affiliate);
 
         this.affiliate = this.userService.getUserValue();
-        this.affiliate.personalData = {
-          nationality: 'ES',
-          dni: 'C11111111D',
-          address: 'calle vieja 500, 1ro 2da.',
-          countryCode: 'ES',
-          regionCode: '53',
-          postalCode: '90001',
-          phone: '444444',
-        };
-        this.affiliate.invoiceData = {
-          companyType: 0,
-          companyName: 'ACME INC.',
-          cif: '0000001234',
-          address: 'AV. nueva 100',
-          countryCode: 'ES',
-          regionCode: '07',
-          postalCode: '91001',
-          phone: '111111',
-          iban: 'ES1234567890123456789012',
-        };
-        this.affiliate.firstVisit = false;
 
-        console.log('this.affiliate', this.affiliate);
+        this.affiliatesService.getByCode( this.affiliate.code)
+          .subscribe(resp => {
+            if (resp.success) {
+              this.userService.setUserData(resp.data);
+            }
+        });
 
-
-
-
-        this.router.navigate(['/bienvenida']);
-        // if (this.affiliate.firstVisit) {
-        //   this.router.navigate(['/bienvenida']);
-        // } else {
-        //   this .router.navigate(['/']);
-        // }
+        if (this.affiliate.firstVisit) {
+          this.router.navigate(['/bienvenida']);
+        } else {
+          this .router.navigate(['/']);
+        }
       } else {
         this.showtErrorMessage();
       }
@@ -82,11 +61,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   get loginControls() {
-    return this.loginForm.controls;
+      return this.loginForm.controls;
   }
 
   private getPassword() {
-    return this.loginForm.get('password').value;
+      return this.loginForm.get('password').value;
   }
 
   private getUserCodeOrEmail() {
@@ -96,16 +75,16 @@ export class LoginPageComponent implements OnInit {
   private createLoginForm() {
     this.loginForm = this.formBuilder.group({
       codeOrEmail: ['', [Validators.required]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       checkRemember: ['']
     });
 
     if (this.checkLocalStorage()) {
       this.loginForm.patchValue({ codeOrEmail: localStorage.getItem(this.keyLocalStorage) });
-      this.loginForm.patchValue({ checkRemember: true });
+      this.loginForm.patchValue({checkRemember : true});
     }
 
-    this.emailControl();
+    this.emailControl() ;
   }
 
   private getCheckSession() {
@@ -113,9 +92,9 @@ export class LoginPageComponent implements OnInit {
   }
 
   emailControl() {
-    const emailControl = this.loginForm.controls.codeOrEmail;
+    const emailControl =  this.loginForm.controls.codeOrEmail;
     emailControl.valueChanges.subscribe(() => {
-      if (emailControl.value === '') {
+      if (emailControl.value === '' ) {
         emailControl.setValidators = null;
         this.errorLogin = false;
       }
@@ -137,7 +116,7 @@ export class LoginPageComponent implements OnInit {
   saveUserCodeOrEmail(): void {
     this.errorLogin = false;
     if (this.getCheckSession()) {
-      localStorage.setItem(this.keyLocalStorage, this.getUserCodeOrEmail());
+      localStorage.setItem(this.keyLocalStorage,  this.getUserCodeOrEmail());
     } else {
       this.cleanLocalCredential();
     }

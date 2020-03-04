@@ -8,7 +8,8 @@ export const environment = {
    // affiliatesApiUrl: 'https://localhost:5001/api/',
    courseApi: 'https://tech-course-api.azurewebsites.net/api/',
    cdnUrl: 'https://cdn.techtitute.com/techtitute/',
-   geoApiUrl : 'https://api-geoapi-test.azurewebsites.net/api/',
+   geoApiUrl: 'https://api-geoapi-test.azurewebsites.net/api/',
+   hostTech: 'http://desarrollo2.techtitute.com',
    jwt: {
       whiteListedDomains: ['api-affiliates-program-test.azurewebsites.net'/*, 'localhost:5001'*/],
       blackListedRoutes:  ['api-affiliates-program-test.azurewebsites.net/api/auth/', /*'localhost:5001/api/auth/',*/

@@ -1,3 +1,8 @@
-<p class="footer-text">
-  <i class="fas fa-map-marker-alt icon-map-marker"></i> <span [innerHTML]="footerText()"></span>
-</p>
+<div class="footer-text">
+   <i class="fas fa-map-marker-alt icon-map-marker" *ngIf="footerConfiguration?.country"></i>
+   <span *ngIf="footerConfiguration" [innerHTML]="footerText()"></span>
+</div>
+
+<div class="app-version" *ngIf="appVersion">
+   {{ appVersion }}
+</div>

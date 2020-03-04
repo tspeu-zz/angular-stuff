@@ -13,7 +13,7 @@
                           [placeholder]="filter.label"
                           [items]="filter.items"
                           [labelForId]="filter.key"
-                          [ngModel]="setFilterSelected(filter.key)"
+                          [ngModel]="getFilterSelected(filter.key)"
                           (change)="onFilterChange($event,filter.key)"></ng-select>
             </div>
 
@@ -42,10 +42,14 @@
                <ul class="list-group list-group-flush">
                   <li class="list-group-item list-item-courses" *ngFor="let course of courses | paginate: { itemsPerPage: paginated.pageSize,
                                                                       currentPage: paginated.page,
-                                                                      totalItems: totalItems }">
+                                                                      totalItems: totalItems }; let i = index">
                      {{course.title}}
-                     <button type="button" mdbBtn class="copy-link-button" mdbWavesEffect (click)="copyToClickBoard(course.url)">
-                        <i class="fas fa-check"></i>
+                     <button  mdbBtn mdbWavesEffect
+                              type="button"
+                              class="copy-link-button"
+                              [ngClass]="i !== copiedUrlCourse? 'copy-link' :'copied-link'"
+                              (click)="copyToClickBoard(course.url, i)">
+                        <i [className]="i !== copiedUrlCourse? 'fa fa-copy' :'fas fa-check'"></i>
                         Copiar enlace
                      </button>
                   </li>
@@ -65,7 +69,7 @@
 
    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
       <pagination-controls class="pagination-controls"
-                           *ngIf="courses.length > 0"
+                           *ngIf="courses.length > 0 && !isLoading"
                            [previousLabel]="paginationControlConfig?.previousLabel"
                            [nextLabel]="paginationControlConfig?.nextLabel"
                            [maxSize]="paginationControlConfig?.maxSize"

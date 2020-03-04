@@ -1,11 +1,24 @@
-.header{
+.header {
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 11;
 }
 
-.container {
-  margin-top: 75px;
-  min-height: 83%;
+.custom-container {
+  padding-top: 75px;
+  padding-bottom: 75px;
+  min-height: 100%;
+}
+
+.footer {
+  position: relative;
+  margin-top: -75px;
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .app-footer {
+    width: 100%;
+  }
 }

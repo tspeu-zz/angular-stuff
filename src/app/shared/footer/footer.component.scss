@@ -1,11 +1,15 @@
 .footer-text {
   text-align: center;
-  margin: 50px 30px 30px 30px;
   font-size: 0.8rem;
   color: #404f61;
 
   .icon-map-marker {
     padding-right: 5px;
   }
+}
 
+.app-version {
+  text-align: right;
+  padding: 0 15px;
+  font-size: 11px;
 }

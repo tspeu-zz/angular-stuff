@@ -62,11 +62,17 @@
       .copy-link-button {
         border-radius: 4px;
         padding: 10px 20px;
-        color: #51c1cf;
-        border: 2px solid #51c1cf;
         background-color: transparent;
         width: 150px;
         text-transform: initial;
+      }
+      .copy-link {
+        color: $light-blue-button;
+        border: 2px solid $light-blue-button;
+      }
+      .copied-link {
+        color: #51c1cf;
+        border: 2px solid #51c1cf;
       }
     }
 

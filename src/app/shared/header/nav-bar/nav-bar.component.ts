@@ -31,7 +31,7 @@ export class NavHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.linksList = this.linksService.getLinks();
-    this.iconList = this.iconsService.getIcons();
+    // this.iconList = this.iconsService.icons();
     this.user = this.userService.getUserValue();
   }
 

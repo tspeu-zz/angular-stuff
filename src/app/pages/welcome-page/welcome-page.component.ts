@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { CountryService } from 'src/app/services/country.service';
 import { Affiliate } from 'src/app/models/affiliate';
-import { Country } from 'src/app/models/country';
+import { GeoCountry } from 'src/app/models/geo-country';
 import { SharePersonalData } from 'src/app/models/share-personal-data';
 import { BehaviorSubject } from 'rxjs';
 import { MatStepper } from '@angular/material';
@@ -18,8 +18,8 @@ import { MatStepper } from '@angular/material';
 export class WelcomePageComponent implements OnInit {
 
 
-  affiliate =  new BehaviorSubject<Affiliate>(null);
-  countries: Country[] = [];
+  affiliate: Affiliate;
+  countries: GeoCountry[] = [];
   showCheckPersonalData = true;
   showPrivacyPolicy = true;
   sendPersonalData: SharePersonalData;
@@ -28,11 +28,18 @@ export class WelcomePageComponent implements OnInit {
 
 
   constructor(private userService: UserService<Affiliate>,
-              private countryService: CountryService) { }
+    private countryService: CountryService) { }
 
   ngOnInit() {
-    this.loadCountries();
-    this.affiliate.next(this.userService.getUserValue());
+    this.affiliate = this.userService.getUserValue();
+    this.countries = this.countryService.getGeoCountries();
+
+    //   this.countryService.getCountries()
+    //     .pipe(map(res => {
+    //       this.countries = res.response;
+    //       console.log('countries', this.countries);
+    //     })
+    //     ).subscribe();
   }
 
 
@@ -43,18 +50,18 @@ export class WelcomePageComponent implements OnInit {
 
   loadCountries() {
     return this.countryService.countries
-        .pipe(
-            map(res => {
-              this.countries = res;
-            })
-        ).subscribe();
+      .pipe(
+        map(res => {
+          this.countries = res;
+        })
+      ).subscribe();
   }
 
-  goForward(stepper: MatStepper) {
+  goForwardStepper(stepper: MatStepper) {
     stepper.next();
   }
 
-  activateStepper(isActivate: boolean) {
+  activatedStepper(isActivate: boolean) {
     this.isActiveStepper = isActivate;
   }
 

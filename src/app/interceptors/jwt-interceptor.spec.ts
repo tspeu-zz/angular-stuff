@@ -1,6 +1,6 @@
 import { JwtInterceptor } from './jwt-interceptor.service';
 
-describe('AuthInterceptor', () => {
+describe('JwtInterceptor', () => {
   it('should create an instance', () => {
     expect(new JwtInterceptor()).toBeTruthy();
   });

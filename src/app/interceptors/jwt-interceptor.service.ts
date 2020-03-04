@@ -5,7 +5,7 @@ import {
    HttpHandler,
    HttpEvent, HttpErrorResponse,
 } from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {JwtService} from '../services/jwt.service';
 import {parse} from 'url';
