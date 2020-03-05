@@ -25,17 +25,19 @@ export class MainLayoutComponent implements OnInit {
 
   private getCountries() {
     this.countryService.getCountries().subscribe(res => {
-      console.log('footer', res);
+      console.log('getCountries', res);
       this.countryService.setGeoCountries(res.response);
     });
   }
 
   get footerConfiguration(): Footer {
     const footerConfig = this.footerService.getFooter();
-    if (this.localization.getUserCountryCode() && this.countryService.getGeoCountries()) {
-      const geoCountry = this.countryService.getGeoCountries().find(country => country.isoCode === this.localization.getUserCountryCode());
-      footerConfig.country = geoCountry.name;
-    }
+    console.log('footerConfig', footerConfig);
+    // if (this.localization.getUserCountryCode() && this.countryService.getGeoCountries()) {
+    //   const geoCountry = this.countryService.getGeoCountries().find(country => country.isoCode === this.localization.getUserCountryCode());
+    //   footerConfig.country = geoCountry.name;
+    // }
+    footerConfig.country = 'AR';
     return footerConfig;
   }
 }

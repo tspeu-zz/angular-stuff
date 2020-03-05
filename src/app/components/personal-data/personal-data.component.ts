@@ -17,6 +17,7 @@ import { CountryService } from 'src/app/services/country.service';
 })
 export class PersonalDataComponent implements OnInit, OnChanges {
 
+  @Input() isReload: boolean;
   @Input() countries: GeoCountry[];
   @Input() user: Affiliate;
   @Input() sharePersonalData: boolean;
@@ -25,7 +26,8 @@ export class PersonalDataComponent implements OnInit, OnChanges {
   @Output() stepperFoward = new EventEmitter<boolean>();
   @Output() isFormValid = new EventEmitter<boolean>();
 
-  @ViewChild('responseModal', {static: false}) showModalOnClick: ModalDirective;
+
+  @ViewChild('responseModal', { static: false }) showModalOnClick: ModalDirective;
 
   welcomeForm: FormGroup;
   affiliate: Affiliate;
@@ -36,9 +38,9 @@ export class PersonalDataComponent implements OnInit, OnChanges {
   labelSaveButton = 'Continuar';
 
   constructor(private userService: UserService<Affiliate>,
-              private fb: FormBuilder,
-              private affiliatesService: AffiliatesService,
-              private countryService: CountryService) {
+    private fb: FormBuilder,
+    private affiliatesService: AffiliatesService,
+    private countryService: CountryService) {
     this.initWelcomeForm();
   }
 
@@ -46,12 +48,19 @@ export class PersonalDataComponent implements OnInit, OnChanges {
     console.log('user-profile');
     this.onChangeCheck();
     this.onChangeForm();
+    // if (this.user) {
+    //   this.affiliate = this.user;
+
+    //   if (this.countries.length > 0) {
+    //     this.loadAffiliatePersonalData(this.affiliate.firstVisit);
+    //   }
+    // }
 
   }
 
   ngOnChanges(SimpleChanges) {
-    if (this.user ) {
-      this.affiliate =  this.user;
+    if (this.user) {
+      this.affiliate = this.user;
     }
 
     if (SimpleChanges.countries && SimpleChanges.countries.currentValue.length > 0) {
@@ -61,17 +70,17 @@ export class PersonalDataComponent implements OnInit, OnChanges {
 
   onChangeCheck() {
     this.welcomeForm.get('showInvoice').valueChanges
-    .subscribe( value => {
-      if (value >= 1) {
-        this.sendPersonalData.emit(this.bindPersonalDataToInvoice());
-      } else {
-        this.sendPersonalData.emit(null);
-      }
-    });
+      .subscribe(value => {
+        if (value >= 1) {
+          this.sendPersonalData.emit(this.bindPersonalDataToInvoice());
+        } else {
+          this.sendPersonalData.emit(null);
+        }
+      });
   }
 
   onChangeCountry(countryCode: string) {
-    if (countryCode !== null ) {
+    if (countryCode !== null) {
       this.setRegionsByCountry(countryCode);
       this.welcomeForm.get('regionCode').enable();
     } else {
@@ -81,8 +90,8 @@ export class PersonalDataComponent implements OnInit, OnChanges {
 
   initWelcomeForm(): void {
     this.welcomeForm = this.fb.group({
-      name : ['', [ Validators.required, Validators.maxLength(100)]],
-      surname : ['', [Validators.required, Validators.maxLength(100)]],
+      name: ['', [Validators.required, Validators.maxLength(100)]],
+      surname: ['', [Validators.required, Validators.maxLength(100)]],
       nationality: [null, [Validators.required]],
       dni: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
       address: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(300)]],
@@ -99,7 +108,7 @@ export class PersonalDataComponent implements OnInit, OnChanges {
   onChangeForm() {
     this.welcomeForm.statusChanges.subscribe(
       newStatus => {
-        newStatus !== 'INVALID' ?  this.isFormValid.emit(true) : this.isFormValid.emit(false);
+        newStatus !== 'INVALID' ? this.isFormValid.emit(true) : this.isFormValid.emit(false);
       });
   }
 
@@ -111,18 +120,18 @@ export class PersonalDataComponent implements OnInit, OnChanges {
 
     this.getFormPersonalData();
     if (this.affiliate.firstVisit) {
-      this.affiliate.personalData =  this.personalData;
+      this.affiliate.personalData = this.personalData;
       this.userService.setUserData(this.affiliate);
       this.stepperFoward.emit(true);
     } else {
-      this.affiliatesService.updatePersonalData(this.affiliate.id , this.personalData)
-      .subscribe(res => {
-        if (res.success) {
-          this.affiliate.personalData =  this.personalData;
-          this.userService.setUserData(this.affiliate);
-          this.showModalOnClick.show();
-        }
-      });
+      this.affiliatesService.updatePersonalData(this.affiliate.id, this.personalData)
+        .subscribe(res => {
+          if (res.success) {
+            this.affiliate.personalData = this.personalData;
+            this.userService.setUserData(this.affiliate);
+            this.showModalOnClick.show();
+          }
+        });
     }
   }
 
@@ -145,81 +154,81 @@ export class PersonalDataComponent implements OnInit, OnChanges {
   setRegionsByCountry(countryCode: string): void {
     this.countries.filter(c => c.isoCode === countryCode)
       .map(co => {
-        this.regions = co.regions ;
+        this.regions = co.regions;
         this.prefixCountry = this.formatPrefixNumber(co.phone);
 
         this.setPostalCodeValidatorByCountry(co.postalCodeRegex);
       });
   }
 
-  setPostalCodeValidatorByCountry(regexPostalCode: string ): void {
+  setPostalCodeValidatorByCountry(regexPostalCode: string): void {
     const postalCodeControl = this.welcomeForm.get('postalCode');
-    if ( regexPostalCode  !== null) {
+    if (regexPostalCode !== null) {
       postalCodeControl.setValidators([Validators.pattern(regexPostalCode), Validators.required]);
     } else {
       postalCodeControl.setValidators([Validators.required, Validators.minLength(3)]);
     }
     postalCodeControl.updateValueAndValidity();
 
-    this.welcomeForm.patchValue({regionCode: null});
+    this.welcomeForm.patchValue({ regionCode: null });
   }
 
   formatPrefixNumber(prefixValue: string): string {
-      return (prefixValue !== '-') ? '+' + prefixValue : '+' + prefixValue.slice(0);
+    return (prefixValue !== '-') ? '+' + prefixValue : '+' + prefixValue.slice(0);
   }
 
   bindPersonalDataToInvoice(): SharePersonalData {
     const personalData: SharePersonalData = {
-        prefixCountry: this.prefixCountry,
-        invoiceData: {
-          companyType: 1,
-          companyName: this.affiliate.name + ' ' + this.affiliate.surname,
-          cif: this.welcomeForm.get('dni').value,
-          address: this.welcomeForm.get('address').value,
-          countryCode: this.welcomeForm.get('countryCode').value,
-          regionCode: this.welcomeForm.get('regionCode').value,
-          postalCode: this.welcomeForm.get('postalCode').value,
-          phone: this.welcomeForm.get('phone').value,
-          iban: ''
-        }
+      prefixCountry: this.prefixCountry,
+      invoiceData: {
+        companyType: 1,
+        companyName: this.affiliate.name + ' ' + this.affiliate.surname,
+        cif: this.welcomeForm.get('dni').value,
+        address: this.welcomeForm.get('address').value,
+        countryCode: this.welcomeForm.get('countryCode').value,
+        regionCode: this.welcomeForm.get('regionCode').value,
+        postalCode: this.welcomeForm.get('postalCode').value,
+        phone: this.welcomeForm.get('phone').value,
+        iban: ''
+      }
     };
     return personalData;
   }
 
   loadAffiliatePersonalData(firstVisit: boolean): void {
     if (!firstVisit) {
-          this.setPersonalDataFormValue();
-          this.setRegionsByCountry(this.affiliate.personalData.countryCode);
-          this.welcomeForm.patchValue({ regionCode: this.affiliate.personalData.regionCode });
-      } else {
-        this.welcomeForm.patchValue({
-          name: this.affiliate.name ? this.affiliate.name : '' ,
-          surname: this.affiliate.surname ? this.affiliate.surname : '',
-        });
-      }
+      this.setPersonalDataFormValue();
+      this.setRegionsByCountry(this.affiliate.personalData.countryCode);
+      this.welcomeForm.patchValue({ regionCode: this.affiliate.personalData.regionCode });
+    } else {
+      this.welcomeForm.patchValue({
+        name: this.affiliate.name ? this.affiliate.name : '',
+        surname: this.affiliate.surname ? this.affiliate.surname : '',
+      });
+    }
     this.setButtonLabel(firstVisit);
   }
 
   setPersonalDataFormValue(): void {
-      const personalData = {
-        name: this.affiliate.name ? this.affiliate.name : '' ,
-        surname: this.affiliate.surname ? this.affiliate.surname : '',
-        nationality: this.affiliate.personalData.nationality,
-        dni: this.affiliate.personalData.dni,
-        address: this.affiliate.personalData.address,
-        countryCode: this.affiliate.personalData.countryCode,
-        regionCode: this.affiliate.personalData.regionCode,
-        postalCode: this.affiliate.personalData.postalCode,
-        phone: this.affiliate.personalData.phone,
-        accept: false,
-        showInvoice: false
-      };
+    const personalData = {
+      name: this.affiliate.name ? this.affiliate.name : '',
+      surname: this.affiliate.surname ? this.affiliate.surname : '',
+      nationality: this.affiliate.personalData.nationality,
+      dni: this.affiliate.personalData.dni,
+      address: this.affiliate.personalData.address,
+      countryCode: this.affiliate.personalData.countryCode,
+      regionCode: this.affiliate.personalData.regionCode,
+      postalCode: this.affiliate.personalData.postalCode,
+      phone: this.affiliate.personalData.phone,
+      accept: false,
+      showInvoice: false
+    };
 
-      this.welcomeForm.setValue(personalData);
+    this.welcomeForm.setValue(personalData);
   }
 
   setButtonLabel(isWelcomePage: boolean) {
-    this.labelSaveButton = isWelcomePage ?  'Continuar'  : 'Guardar';
+    this.labelSaveButton = isWelcomePage ? 'Continuar' : 'Guardar';
   }
 
 }

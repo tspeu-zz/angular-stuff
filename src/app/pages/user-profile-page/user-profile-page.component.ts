@@ -16,6 +16,7 @@ export class UserProfilePageComponent implements OnInit {
 
   countries: GeoCountry[] = [];
   affiliate: Affiliate;
+  reload = false;
 
   constructor(private userService: UserService<Affiliate>,
     private countryService: CountryService) { }
@@ -23,15 +24,16 @@ export class UserProfilePageComponent implements OnInit {
   ngOnInit() {
     console.log('user');
     this.affiliate = this.userService.getUserValue();
+    this.reload = this.affiliate ? true : false;
     this.countries = this.countryService.getGeoCountries();
 
-    7
 
     if (!this.affiliate) {
       this.userService.getUserData()
         .subscribe(res => {
           console.log(res);
           this.affiliate = res;
+          this.reload = true;
         });
     }
     // this.countryService.setCountryObservable();

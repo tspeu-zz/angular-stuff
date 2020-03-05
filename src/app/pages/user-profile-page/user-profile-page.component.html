@@ -5,13 +5,14 @@
         <h1 class="title-app text-align-left">Programa de <b>afiliados</b></h1>
         <h2 class="title-page">Perfil de usuario</h2>
     </div>
- <div *ngIf="countries > 0 ; else loading">
+ <div *ngIf="reload ; else loading">
     <mat-horizontal-stepper [linear]="true"  #stepper class="col-sm-12">
         
         <mat-step [stepControl]="firstFormGroup" color="primary">
             <ng-template matStepLabel>Datos presonales</ng-template>
             <div class="card z-depth-2  mt-lg-2 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-2 ">
                 <app-personal-data #firstFormGroup
+                    [isReload]="reload"
                     [user]="affiliate"
                     [countries]="countries"
                     (stepperFoward)="goForwardStepper(stepper)">
