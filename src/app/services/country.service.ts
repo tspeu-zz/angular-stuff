@@ -1,53 +1,44 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, of, from, BehaviorSubject } from 'rxjs';
 import { ResponseGeoApi } from '../models/response/response-geo-api';
 import { GeoCountry } from '../models/geo-country';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class CountryService {
 
-    private readonly geoApiUrl = environment.geoApiUrl + 'country';
-    private countriesData = new BehaviorSubject<GeoCountry[]>([]);
-    private countriesStore: { countries: GeoCountry[] } = { countries: [] };
-    private geoCountries: GeoCountry[];
+  private readonly geoApiUrl = environment.geoApiUrl + 'country';
+  private geoCountries: GeoCountry[];
+  private _countries = new BehaviorSubject<GeoCountry[]>([]);
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-    getCountries(): Observable<ResponseGeoApi<GeoCountry[]>> {
-      const params = new HttpParams()
-          .set('LanguageCode', 'ES')
-          .set('LanguageVariant', 'ES');
-      return this.http.get<ResponseGeoApi<GeoCountry[]>>(this.geoApiUrl, { params });
-    }
+  getCountries(): Observable<ResponseGeoApi<GeoCountry[]>> {
+    const params = new HttpParams()
+      .set('LanguageCode', 'ES')
+      .set('LanguageVariant', 'ES');
+    return this.http.get<ResponseGeoApi<GeoCountry[]>>(this.geoApiUrl, { params });
+  }
 
-    get countries() {
-        this.loadAllCountries();
-        return this.countriesData.asObservable();
-    }
+  getGeoCountries(): GeoCountry[] {
+    return this.geoCountries;
+  }
 
-    loadAllCountries() {
-        this.getCountries()
-        .subscribe(
-            res => {
-                this.countriesStore.countries = res.response;
-                this.countriesData.next(Object.assign({}, this.countriesStore).countries);
-                },
-                error => {
-                    console.log('Error load Countries, ', error);
-                }
-            );
-    }
+  setGeoCountries(countries: GeoCountry[]) {
+    this.geoCountries = countries;
+  }
 
-    getGeoCountries(): GeoCountry[] {
-      return this.geoCountries;
-    }
+  setCountryObservable() {
+    console.log(this.geoCountries);
+    return this._countries.next(this.geoCountries);
+  }
 
-    setGeoCountries(countries: GeoCountry[]) {
-      this.geoCountries = countries;
-    }
+  geCountriesValue(): Observable<GeoCountry[]> {
+    return this._countries;
+  }
+
 
 }

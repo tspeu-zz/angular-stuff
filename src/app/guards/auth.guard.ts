@@ -10,13 +10,12 @@ import { Affiliate } from '../models/affiliate';
 export class AuthGuard implements CanActivateChild {
 
   private readonly urlWelcomePage = '/bienvenida';
-  private readonly userFirstLogin: boolean;
+  private userFirstLogin: boolean;
 
-  constructor(private router: Router, private jwtService: JwtService, private userService: UserService<Affiliate>) {
-    this.userFirstLogin = this.userService.getUserValue() ? this.userService.getUserValue().firstVisit : true;
-  }
+  constructor(private router: Router, private jwtService: JwtService, private userService: UserService<Affiliate>) {}
 
   canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean  {
+    this.setUserFirstLogin();
     let isActive = false;
     if (this.jwtService.getAccessToken() == null) {
       this.router.navigate(['/login']);
@@ -30,5 +29,9 @@ export class AuthGuard implements CanActivateChild {
       }
     }
     return isActive;
+  }
+
+  setUserFirstLogin() {
+    this.userFirstLogin = this.userService.getUserValue() ? this.userService.getUserValue().firstVisit : true;
   }
 }

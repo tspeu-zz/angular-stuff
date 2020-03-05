@@ -5,7 +5,7 @@
         <h1 class="title-app text-align-left">Programa de <b>afiliados</b></h1>
         <h2 class="title-page">Perfil de usuario</h2>
     </div>
-    
+ <div *ngIf="countries > 0 ; else loading">
     <mat-horizontal-stepper [linear]="true"  #stepper class="col-sm-12">
         
         <mat-step [stepControl]="firstFormGroup" color="primary">
@@ -30,5 +30,6 @@
         </mat-step>
     
     </mat-horizontal-stepper>
-
+</div>
+<ng-template #loading>Loading User Data...</ng-template>
 </div>

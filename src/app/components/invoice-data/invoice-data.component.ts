@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { AffiliatesService } from 'src/app/services/affiliates.service';
 import { UserService } from 'src/app/services/user.service';
 import { Affiliate } from 'src/app/models/affiliate';
@@ -8,7 +9,7 @@ import { GeoCountry } from 'src/app/models/geo-country';
 import { SharePersonalData } from 'src/app/models/share-personal-data';
 import { InvoiceData } from 'src/app/models/invoice-data';
 import { Region } from 'src/app/models/region';
-import { BehaviorSubject, forkJoin } from 'rxjs';
+import { ModalDirective } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-invoice-data',
@@ -17,10 +18,11 @@ import { BehaviorSubject, forkJoin } from 'rxjs';
 })
 export class InvoiceDataComponent implements OnInit, OnChanges {
 
-  // @Input() user: BehaviorSubject<Affiliate>;
   @Input() user: Affiliate;
   @Input() countries: GeoCountry[];
   @Input() personalData: SharePersonalData;
+  @ViewChild('responseModal', {static: false}) showModalOnClick: ModalDirective;
+
 
   invoiceForm: FormGroup;
   affiliate: Affiliate;
@@ -38,8 +40,8 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
   labelSaveButton = 'Continuar';
 
   constructor(private userService: UserService<Affiliate>,
-    private fb: FormBuilder, private router: Router,
-    private affiliatesService: AffiliatesService) {
+              private fb: FormBuilder, private router: Router,
+              private affiliatesService: AffiliatesService) {
     this.initInvoiceForm();
   }
 
@@ -50,24 +52,13 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(SimpleChanges): void {
-    if (this.user) {
-      this.affiliate = this.user;
-      this.setButtonLabel(this.affiliate.firstVisit);
+    if (this.user ) {
+        this.affiliate =  this.user;
+        this.setButtonLabel(this.affiliate.firstVisit);
     }
 
-    if (SimpleChanges.countries && SimpleChanges.countries.currentValue.length > 0) {
-      this.loadAffiliateInvoiceData(this.affiliate.firstVisit);
-      this.countries.filter(c => c.isoCode === this.affiliate.invoiceData.countryCode)
-        .map(co => {
-          this.regionsInvoice = co.regions;
-          this.prefixCountryInvoice = this.formatPrefixNumber(co.phone);
-
-          this.setPostalCodeValidatorByCountry(co.postalCodeRegex);
-        });
-      this.invoiceForm.patchValue({
-        invoiceRegionCode: this.affiliate.invoiceData.regionCode,
-        companyType: this.affiliate.invoiceData.companyType
-      });
+    if (SimpleChanges.countries &&  SimpleChanges.countries.currentValue.length > 0) {
+        this.loadAffiliateInvoiceData(this.affiliate.firstVisit);
     }
     if (this.personalData) {
       this.bindPersonalDataToInvoice(this.personalData);
@@ -119,16 +110,15 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
     this.getInvoiceFormValue();
     if (this.affiliate.firstVisit) {
       forkJoin(
-        this.affiliatesService.updatePersonalData(this.affiliate.id, this.affiliate.personalData),
+        this.affiliatesService.updatePersonalData(this.affiliate.id , this.affiliate.personalData),
         this.affiliatesService.updateInvoiceData(this.affiliate.id, this.affiliateInvoiceData))
         .subscribe(([personalResp, invoiceResp]) => {
 
           if (personalResp.success && invoiceResp.success) {
-            this.affiliate.invoiceData = this.affiliateInvoiceData;
             this.affiliate.firstVisit = false;
+            this.affiliate.invoiceData = this.affiliateInvoiceData;
             this.userService.setUserData(this.affiliate);
-            this.router.navigateByUrl('/dashboard');
-
+            this.router.navigate(['/']);
           }
         });
     } else {
@@ -138,6 +128,7 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
           if (res.success) {
             this.affiliate.invoiceData = this.affiliateInvoiceData;
             this.userService.setUserData(this.affiliate);
+            this.showModalOnClick.show();
           }
         });
     }
@@ -209,9 +200,9 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
   setPostalCodeValidatorByCountry(regexPostalCodeInvoice: string): void {
     const postalCodeControl = this.invoiceForm.get('invoicePostalCode');
     if (regexPostalCodeInvoice !== null) {
-      postalCodeControl.setValidators([Validators.pattern(regexPostalCodeInvoice), Validators.required]);
+        postalCodeControl.setValidators([Validators.pattern(regexPostalCodeInvoice), Validators.required]);
     } else {
-      postalCodeControl.setValidators([Validators.required, Validators.minLength(3)]);
+        postalCodeControl.setValidators([Validators.required, Validators.minLength(3)]);
     }
     postalCodeControl.updateValueAndValidity();
 
@@ -247,6 +238,13 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
   loadAffiliateInvoiceData(firstVisit: boolean) {
     if (!firstVisit) {
       this.setInvoiceDataFormValue();
+      this.setRegionsByCountry(this.affiliate.invoiceData.countryCode);
+      this.invoiceForm.patchValue({
+        invoiceRegionCode: this.affiliate.invoiceData.regionCode,
+        companyType: this.affiliate.invoiceData.companyType
+      });
+      this.toggleCompanyType(this.invoiceForm.get('companyType').value);
+      this.setIbanControlTouched();
     }
   }
 
@@ -273,7 +271,15 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
   }
 
   setButtonLabel(isWelcomePage: boolean) {
-    this.labelSaveButton = isWelcomePage ? 'Continuar' : 'Guardar';
+    this.labelSaveButton = isWelcomePage ?  'Continuar'  : 'Guardar';
+  }
+
+  setIbanControlTouched(): void {
+    this.invoiceForm.get('ibanForm.ibanCountryCode').markAsTouched();
+    this.invoiceForm.get('ibanForm.ibanEntity').markAsTouched();
+    this.invoiceForm.get('ibanForm.ibanOffice').markAsTouched();
+    this.invoiceForm.get('ibanForm.ibanControlDigit').markAsTouched();
+    this.invoiceForm.get('ibanForm.ibanAccountNumber').markAsTouched();
   }
 
 }

@@ -278,6 +278,9 @@
       .col {
           padding: 0 5px;
       }
+      .check-accept{
+        font-size: 50px;
+      }
   }
   
   .text-size-info {
@@ -477,5 +480,12 @@
     }
   }
 
+  }
+}
+
+.modal-information {
+  .close-icon {
+    color: $light-blue-button;
+    font-size: 1.2rem;  
   }
 }

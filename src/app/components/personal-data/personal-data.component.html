@@ -111,8 +111,9 @@
                         <label class="text-left mr-2" for="accept">* He leído y acepto la
                             <a (click)="basicModal.show()" class="text-left mr-2">
                                 <strong>Política de privacidad y uso de datos: </strong></a>
-                            <input type="checkbox" id="accept" class="ml-1 accept-conditions"
-                            formControlName="accept" required>
+                            <input type="checkbox" id="accept" class="ml-1 accept-conditions check-accept"
+                            formControlName="accept" 
+                            [checked]="false" required>
                         </label>
                     </div>
                 </div>
@@ -136,7 +137,7 @@
                         class="custom-control-input"
                         value=0 name="showInvoice"
                         formControlName="showInvoice"
-                        [checked]="true">
+                        [checked]="false">
                         <label class="custom-control-label" for="negative">No</label>
                     </div>
                 </div>
@@ -149,7 +150,7 @@
     </div>
 </div>  
 
-<div mdbModal #basicModal="mdbModal" class="personal-data modal fade" tabindex="-1" role="dialog" 
+<div mdbModal #basicModal="mdbModal" class=" modal-information modal fade" tabindex="-1" role="dialog" 
     aria-labelledby="myBasicModalLabel" style="overflow: auto" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -189,8 +190,32 @@
       </div>
       <div class="modal-footer">
         <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Close" 
-        (click)="basicModal.hide()" mdbWavesEffect>Cerrar</button>
+        (click)="basicModal.hide()" mdbWavesEffect >Cerrar</button>
       </div>
     </div>
   </div>
+</div>
+
+
+<div mdbModal #responseModal=mdbModal
+    class="modal fade bottom modal-information" id="responseModal" tabindex="-1" role="dialog" 
+        aria-labelledby="responseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="responseModalLabel">Datos Actualizados! </h5>
+                <button type="button" class="close pull-right" aria-label="Close" 
+                        (click)="responseModal.hide()">
+                    <span aria-hidden="true"class="close-icon">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Los datos se han actualizado correctamente!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                (click)="responseModal.hide()">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

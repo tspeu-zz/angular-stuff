@@ -156,3 +156,27 @@
         </form>
     </div>
 </div>
+
+<div mdbModal #responseModal=mdbModal
+    class="modal fade bottom modal-information" id="responseModal" tabindex="-1" role="dialog" 
+        aria-labelledby="responseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="responseModalLabel">Datos Actualizados! </h5>
+                <button type="button" class="close pull-right" aria-label="Close" 
+                        (click)="responseModal.hide()">
+                    <span aria-hidden="true"class="close-icon">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Los datos se han actualizado correctamente!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                (click)="responseModal.hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->

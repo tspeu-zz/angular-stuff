@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { CountryService } from 'src/app/services/country.service';
 import { GeoCountry } from 'src/app/models/geo-country';
 import { Affiliate } from 'src/app/models/affiliate';
-import { map } from 'rxjs/operators';
 import { MatStepper } from '@angular/material';
-import { AffiliatesService } from 'src/app/services/affiliates.service';
-
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile-page',
@@ -20,34 +17,35 @@ export class UserProfilePageComponent implements OnInit {
   affiliate: Affiliate;
 
   constructor(private userService: UserService<Affiliate>,
-    private countryService: CountryService,
-    private affiliatesService: AffiliatesService) { }
+    private countryService: CountryService) { }
 
   ngOnInit() {
-    console.log('user profile');
-    // const affiliateLogin = this.userService.getUserValue();
-    // console.log(affiliateLogin);
+    console.log('user');
+    console.log(this.affiliate);
+    console.log(this.countries);
     this.affiliate = this.userService.getUserValue();
     this.countries = this.countryService.getGeoCountries();
 
-    // this.countryService.getCountries()
-    // .pipe(map(res => {
-    //   this.countries = res.response;
-    //   console.log('countries', this.countries);
-    // })
-    // ).subscribe();
+    if (!this.affiliate) {
+      this.userService.getUserData()
+        .subscribe(res => {
+          console.log(res);
+          this.affiliate = res;
+        });
+    }
+    this.countryService.setCountryObservable();
 
-  }
+
+    if (!this.countries)
+      this.countryService.geCountriesValue()
+        .subscribe(
+          res => {
+            console.log('-->,', res);
+            this.countries = res;
+          }
+        );
 
 
-
-  loadCountries() {
-    return this.countryService.countries
-      .pipe(
-        map(res => {
-          this.countries = res;
-        })
-      ).subscribe();
   }
 
   goForwardStepper(stepper: MatStepper) {
