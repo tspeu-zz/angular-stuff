@@ -24,19 +24,21 @@ export class CountryService {
   }
 
   getGeoCountries(): GeoCountry[] {
-    return this.geoCountries;
+    // return this.geoCountries;
+    return this._countries.getValue();
   }
 
   setGeoCountries(countries: GeoCountry[]) {
-    this.geoCountries = countries;
+    // this.geoCountries = countries;
+    this._countries.next(countries);
   }
 
   setCountryObservable() {
     console.log(this.geoCountries);
-    return this._countries.next(this.geoCountries);
+    this._countries.next(this.geoCountries);
   }
 
-  geCountriesValue(): Observable<GeoCountry[]> {
+  getCountriesValue(): Observable<GeoCountry[]> {
     return this._countries;
   }
 

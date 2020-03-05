@@ -5,6 +5,7 @@ import { GeoCountry } from 'src/app/models/geo-country';
 import { Affiliate } from 'src/app/models/affiliate';
 import { MatStepper } from '@angular/material';
 import { from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-profile-page',
@@ -21,10 +22,10 @@ export class UserProfilePageComponent implements OnInit {
 
   ngOnInit() {
     console.log('user');
-    console.log(this.affiliate);
-    console.log(this.countries);
     this.affiliate = this.userService.getUserValue();
     this.countries = this.countryService.getGeoCountries();
+
+    7
 
     if (!this.affiliate) {
       this.userService.getUserData()
@@ -33,17 +34,21 @@ export class UserProfilePageComponent implements OnInit {
           this.affiliate = res;
         });
     }
-    this.countryService.setCountryObservable();
+    // this.countryService.setCountryObservable();
 
 
-    if (!this.countries)
-      this.countryService.geCountriesValue()
-        .subscribe(
-          res => {
-            console.log('-->,', res);
-            this.countries = res;
-          }
-        );
+    if (this.countries.length <= 0)
+      this.countryService.getCountries().subscribe(res => {
+        console.log('page ', res);
+        this.countries = res.response;
+      });
+    // this.countryService.getCountriesValue()
+    //   .subscribe(
+    //     res => {
+    //       console.log('-->,', res);
+    //       this.countries = res;
+    //     }
+    //   );
 
 
   }

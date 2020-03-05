@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Footer } from 'src/app/models/footer';
 import { FooterService } from 'src/app/mocks/footer.service';
-import {LocalizationService} from '../../../services/localization.service';
-import {CountryService} from '../../../services/country.service';
-import {version} from '../../../../assets/version';
+import { LocalizationService } from '../../../services/localization.service';
+import { CountryService } from '../../../services/country.service';
+import { version } from '../../../../assets/version';
 
 @Component({
   selector: 'app-base-layout',
@@ -25,6 +25,7 @@ export class MainLayoutComponent implements OnInit {
 
   private getCountries() {
     this.countryService.getCountries().subscribe(res => {
+      console.log('footer', res);
       this.countryService.setGeoCountries(res.response);
     });
   }
