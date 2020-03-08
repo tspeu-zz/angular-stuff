@@ -1,16 +1,35 @@
-import { Component, Input } from '@angular/core';
-import { ResumeCard } from 'src/app/models/resume-card';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {DateRange, SatDatePicker, StatisticsAffiliate} from 'src/app/models/statistics-affiliate';
+
+import * as moment from 'moment';
+
+
 @Component({
   selector: 'app-resume',
   templateUrl: './resume.component.html',
   styleUrls: ['./resume.component.scss']
 })
-export class ResumeComponent {
+export class ResumeComponent implements OnInit {
 
-  @Input() resumeCard: ResumeCard;
+  @Input() resumeCard: StatisticsAffiliate;
+  @Input() dateRange: DateRange;
+  @Output() onChangeDate = new EventEmitter<DateRange>();
 
-  constructor() { }
+  satDatePicker: SatDatePicker;
+  constructor() {}
 
-  changeDate(date) { }
+  ngOnInit(): void {
+    this.satDatePicker = { begin: new Date(this.dateRange.from), end: new Date(this.dateRange.to) };
+  }
+
+
+  changeDate(rangeDate) {
+    this.satDatePicker = rangeDate.value;
+    this.onChangeDate.emit({
+      from: moment(rangeDate.value.begin).format('YYYY-MM-DD'),
+      to: moment(rangeDate.value.end).format('YYYY-MM-DD')
+    });
+  }
+
 
 }

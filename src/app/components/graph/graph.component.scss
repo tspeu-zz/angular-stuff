@@ -27,6 +27,9 @@
     }
 
     .resume-graph-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       width: 33%;
 
       @include media-breakpoint-down(sm) {

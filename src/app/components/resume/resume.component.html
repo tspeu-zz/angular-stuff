@@ -1,30 +1,32 @@
 <div class="card-body">
-    <div class="date-picker">
-        <mat-form-field>
-            <input for="picker" 
-            placeholder="Fecha de inicio"
-            (dateInput)="changeDate($event)" matInput 
-            [matDatepicker]="picker">
-            <mat-datepicker-toggle for="picker" matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker for="picker" #picker startView="year">
-            </mat-datepicker>
-        </mat-form-field>
-    </div>
-    <div class="card-subtitle">
-        <h4>{{resumeCard.subtitle}}</h4>
-    </div>
-    <div class="card-box">
-        <div *ngFor="let item of resumeCard.items" class="card-content">
-            <p class="card-text">{{item.text}}:</p>
-            <p class="card-text-value">{{item.value}}</p>
-        </div>
-    </div>
-    <div class="card-total">
-        <p>
-            TOTAL: <span class="total">{{resumeCard.total}}</span>
-        </p>
-        <div class="comision-text">
-            <p>Comisión total neta.</p>
-        </div>
-    </div>
+   <div class="date-picker custom-date-picker">
+      <mat-form-field>
+         <input matInput
+                placeholder="Elige un rango de fechas"
+                [satDatepicker]="datepicker"
+                [value]="satDatePicker"
+                (dateInput)="changeDate($event)">
+         <sat-datepicker #datepicker [rangeMode]="true"></sat-datepicker>
+         <sat-datepicker-toggle matSuffix [for]="datepicker"></sat-datepicker-toggle>
+      </mat-form-field>
+   </div>
+   <div class="card-subtitle">
+      <h4>{{resumeCard.subtitle}}</h4>
+   </div>
+   <div class="card-box">
+      <div *ngFor="let item of resumeCard.items" class="card-content">
+         <p class="card-text"> {{ item?.label }}: </p>
+         <p class="card-text-value"> {{ item?.value }} </p>
+      </div>
+   </div>
+   <div class="card-total">
+      <p> TOTAL:
+         <span class="total" >
+            {{ ((resumeCard?.amount | number:'.0-5': resumeCard?.countryCode) | currencyCustom:resumeCard?.currencySymbol:resumeCard?.countryCode) }}
+        </span>
+      </p>
+      <div class="comision-text">
+         <p>Comisión total neta.</p>
+      </div>
+   </div>
 </div>

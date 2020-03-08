@@ -4,7 +4,7 @@
             {{title}}
         </div>
         <ng-template #dropdown>
-            <div class="dropdown">
+            <div class="dropdown" *ngIf="dropdownOptions">
                 <select (change)="selectOption($event.target.value)"   >
                     <option *ngFor="let item of dropdownOptions" [value]="item.key">{{item.text}}</option>
                 </select>

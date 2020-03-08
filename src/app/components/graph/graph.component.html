@@ -12,13 +12,16 @@
         </canvas>
     </div>
     <div class="fecha-graph">
-        <p><i class="far fa-calendar-alt"> </i> Fecha inicio:10/10/10 </p>
-        <p><i class="far fa-calendar-alt"> </i> Fecha fin: 10/10/10</p>
+        <p><i class="far fa-calendar-alt"> </i> Fecha inicio: {{ dateRange?.from | date: 'dd/MM/yyyy'}}</p>
+        <p><i class="far fa-calendar-alt"> </i> Fecha fin: {{ dateRange?.to | date: 'dd/MM/yyyy'}}</p>
     </div>
     <div class="resume-graph">
-        <div *ngFor="let item of graphCard.graphResume" class="resume-graph-box" >
-            <p>{{item.text}}</p>
-            <p>{{item.value}}</p>
+        <div *ngFor="let item of graphCard.summary" class="resume-graph-box" >
+            <p>{{item.label}}</p>
+            <p *ngIf="item.key !== 'amount'; else amount"> {{ item.value }} </p>
+            <ng-template #amount>
+               <p>{{ ((item.value | number:'.0-5': countryCode) | currencyCustom:currencySymbol:countryCode) }}</p>
+            </ng-template>
         </div>
     </div>
 </div>

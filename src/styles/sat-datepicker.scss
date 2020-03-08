@@ -1,0 +1,16 @@
+@import "./src/styles/variables";
+
+
+  ::ng-deep{
+    .mat-calendar-body-selected {
+      background-color: $light-blue;
+    }
+    .mat-datepicker-toggle-active{
+      color: $light-blue;
+    }
+    .mat-calendar-body-begin-range:not(.mat-calendar-body-end-range),
+    .mat-calendar-body-end-range:not(.mat-calendar-body-begin-range),
+    .mat-calendar-cell-semi-selected {
+      background-color:#027ae929;
+    }
+  }

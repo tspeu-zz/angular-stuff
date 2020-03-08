@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ResumeCard, ResumecardItem } from '../models/resume-card';
+import { StatisticsAffiliate, AffiliateStatisticsItem } from '../models/statistics-affiliate';
 import { Graph, ChartDataSets, ChartColors, ChartOptions, GraphResume } from '../models/graph';
 @Injectable({
   providedIn: 'root'
 })
 export class CardsService {
 
-  resumeCard: ResumeCard;
-  resumeCardItem: ResumecardItem[];
+  resumeCard: StatisticsAffiliate;
+  resumeCardItem: AffiliateStatisticsItem[];
   graphData: Graph;
 
   chartType: string;
@@ -15,44 +15,44 @@ export class CardsService {
   chartLabels: string[];
   chartColors: ChartColors[];
   chartOptions: ChartOptions;
-  graphResume: GraphResume[];
+  graphResume: AffiliateStatisticsItem[];
 
   constructor() { }
 
 
-  getResumeCard(): ResumeCard {
-    this.resumeCardItem =
-      [
-      { text: 'Número total de productos', value: '1598' },
-      { text: 'Clicks', value: '8056' },
-      { text: 'Conversion', value: '75.7%' },
-      { text: 'Visualizaciones', value: '10157' },
-      { text: 'Precio por conversión', value: '100€' }];
+  /*getResumeCard(): StatisticsAffiliate {
+    this.resumeCardItem = [
+      { label: 'Número total de productos', value: '1598' },
+      { label: 'Clicks', value: '8056' },
+      { label: 'Conversion', value: '75.7%' },
+      { label: 'Visualizaciones', value: '10157' },
+      { label: 'Precio por conversión', value: '100€' }
+    ];
 
 
-    this.resumeCard = {
+    /!*this.resumeCard = {
       title: 'Informe de facturación',
       subtitle: 'Datos de venta',
       datePicker: ['0', '2'],
       items: this.resumeCardItem,
       total: '8.100€'
-    };
+    };*!/
 
     return this.resumeCard;
-  }
+  }*/
 
-  getGraphCard(option) {
+  /*getGraphCard(option) {
 
     switch (option) {
       case '1':
         this.chartType = 'line';
 
         this.chartDataSets = [
-          { data: [1000, 3000, 6000, 7000, 7500, 8000, 8056], label: 'Clicks' },
-          { data: [1500, 3500, 4500, 8500, 9500, 10000, 10157], label: 'Visualizaciones' }
+          { data: [1000], label: 'Clicks' },
+          { data: [1500], label: 'Visualizaciones' }
         ];
 
-        this.chartLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'];
+        this.chartLabels = ['Enero'];
 
         this.chartColors = [
           {
@@ -72,13 +72,13 @@ export class CardsService {
         };
 
         this.graphResume = [
-          { text: 'Clicks:', value: '8056' },
-          { text: 'Visualizaciones:', value: '10157' },
-          { text: 'Total de ingresos:', value: '8100€' }
+          { label: 'Clicks:', value: '8056' },
+          { label: 'Visualizaciones:', value: '10157' },
+          { label: 'Total de ingresos:', value: '8100€' }
         ];
 
         break;
-      case '2':
+      /!*case '2':
         this.chartType = 'bar';
 
         this.chartDataSets = [
@@ -88,7 +88,7 @@ export class CardsService {
           { data: [13, 23, 35, 41, 59, 67, 75.7], label: 'Conversión' }
         ];
 
-        this.chartLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'];
+        this.chartLabels = ['Enero'];
         this.chartColors = [
           {
             backgroundColor: 'red',
@@ -116,13 +116,13 @@ export class CardsService {
           responsive: true
         };
 
-        this.graphResume = [
-          { text: 'Conversión:', value: '75.7%' },
-          { text: 'Número total de productos:', value: '1598' },
-          { text: 'Total de ingresos:', value: '8100€' }
+        this.summary = [
+          { label: 'Conversión:', value: '75.7%' },
+          { label: 'Número total de productos:', value: '1598' },
+          { label: 'Total de ingresos:', value: '8100€' }
         ];
 
-        break;
+        break;*!/
     }
 
     this.graphData = {
@@ -131,11 +131,11 @@ export class CardsService {
       chartLabels: this.chartLabels,
       chartColors: this.chartColors,
       chartOptions: this.chartOptions,
-      graphResume: this.graphResume,
+      summary: this.graphResume,
     };
 
     return this.graphData;
-  }
+  }*/
 
   getDropdownConfiguration() {
     return [

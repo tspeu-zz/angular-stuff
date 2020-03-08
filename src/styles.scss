@@ -1,5 +1,7 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "./src/styles/mdboostrap-imports";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~saturn-datepicker/bundle.css';
 
 html, body {
   height: 100%;

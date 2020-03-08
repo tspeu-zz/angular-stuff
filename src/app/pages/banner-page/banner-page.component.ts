@@ -84,7 +84,7 @@ export class BannerPageComponent {
 
   copyToClickBoard(url: string, indexCourse: number) {
     this.copiedUrlCourse = indexCourse;
-    this.utilsService.copyTextToClickBoard(`${this.HOST_TECH}${url}?efcode=${this.userService.getUserValue().code}` );
+    this.utilsService.copyTextToClickBoard(`${this.HOST_TECH}${url}?afcode=${this.userService.getUserValue().code}` );
   }
 
   onPageChange(page: number): void {

@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {registerLocaleData} from '@angular/common';
 
 // const
 import { FORMATS_MOMENT } from './globals/constants';
@@ -58,13 +59,74 @@ import { IconsService } from './mocks/icons.service';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { TermsAndConditionsPageComponent } from './pages/terms-and-conditions-page/terms-and-conditions-page.component';
 import { UserMenuComponent } from './shared/header/user-menu/user-menu.component';
+import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
+
+// Pipes
+import {CurrencyCustomPipe} from './pipes/currency-custom.pipe';
+
+
+// Locale
+import localeES from '@angular/common/locales/es';
+import localeDO from '@angular/common/locales/es-DO';
+import localePR from '@angular/common/locales/es-PR';
+import localeHN from '@angular/common/locales/es-HN';
+import localeSV from '@angular/common/locales/es-SV';
+import localeGT from '@angular/common/locales/es-GT';
+import localePA from '@angular/common/locales/es-PA';
+import localeCR from '@angular/common/locales/es-CR';
+import localeBO from '@angular/common/locales/es-BO';
+import localePY from '@angular/common/locales/es-PY';
+import localeUY from '@angular/common/locales/es-UY';
+import localePE from '@angular/common/locales/es-PE';
+import localeEC from '@angular/common/locales/es-EC';
+import localeCL from '@angular/common/locales/es-CL';
+import localeAR from '@angular/common/locales/es-AR';
+import localeCO from '@angular/common/locales/es-CO';
+import localeMX from '@angular/common/locales/es-MX';
+import localeVE from '@angular/common/locales/es-VE';
+import localeBR from '@angular/common/locales/es-BR';
+import localeCU from '@angular/common/locales/es-CU';
+import localeGQ from '@angular/common/locales/es-GQ';
+import localePT from '@angular/common/locales/pt';
+import localeNI from '@angular/common/locales/es-NI';
+import localeUS from '@angular/common/locales/es-US';
+
+import * as moment from 'moment';
+import { LoadingComponent } from './components/loading/loading.component';
+
+registerLocaleData(localeES, 'es');
+registerLocaleData(localeDO, 'do');
+registerLocaleData(localePR, 'pr');
+registerLocaleData(localeHN, 'hn');
+registerLocaleData(localeSV, 'sv');
+registerLocaleData(localeGT, 'gt');
+registerLocaleData(localePA, 'pa');
+registerLocaleData(localeCR, 'cr');
+registerLocaleData(localeBO, 'bo');
+registerLocaleData(localePY, 'py');
+registerLocaleData(localeUY, 'uy');
+registerLocaleData(localePE, 'pe');
+registerLocaleData(localeEC, 'ec');
+registerLocaleData(localeCL, 'cl');
+registerLocaleData(localeAR, 'ar');
+registerLocaleData(localeCO, 'co');
+registerLocaleData(localeMX, 'mx');
+registerLocaleData(localeVE, 've');
+registerLocaleData(localeBR, 'br');
+registerLocaleData(localeCU, 'cu');
+registerLocaleData(localeGQ, 'gq');
+registerLocaleData(localePT, 'pt');
+registerLocaleData(localeNI, 'ni');
+registerLocaleData(localeUS, 'us');
+
+moment.locale('es');
 
 
 // initialize app
 export function initializeApp(appInitService: AppInitService) {
-   return (): Promise<any> => {
-      return appInitService.Init();
-   };
+  return (): Promise<any> => {
+    return appInitService.Init();
+  };
 }
 
 @NgModule({
@@ -95,6 +157,8 @@ export function initializeApp(appInitService: AppInitService) {
       PersonalDataComponent,
       InvoiceDataComponent,
       UserProfilePageComponent,
+      CurrencyCustomPipe,
+      LoadingComponent
    ],
    imports: [
       BrowserModule,
@@ -113,7 +177,9 @@ export function initializeApp(appInitService: AppInitService) {
       ReactiveFormsModule,
       BrowserAnimationsModule,
       NgSelectModule,
-      MatStepperModule
+      MatStepperModule,
+      SatDatepickerModule,
+      SatNativeDateModule
    ],
    exports: [
       MatDatepickerModule,

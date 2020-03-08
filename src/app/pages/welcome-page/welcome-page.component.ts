@@ -24,18 +24,39 @@ export class WelcomePageComponent implements OnInit {
   sendPersonalData: SharePersonalData;
   isActiveStepper = false;
   isLinear = true;
+  reload = false;
 
 
   constructor(private userService: UserService<Affiliate>,
               private countryService: CountryService) { }
 
   ngOnInit() {
-    this.countryService.getCountries()
-    .pipe(map(res => {
-      this.countries = res.response;
-    })).subscribe();
+
     this.affiliate = this.userService.getUserValue();
-    // this.countries = this.countryService.getGeoCountries();
+    this.reload = this.affiliate ? true : false;
+    this.countries = this.countryService.getCountriesValue();
+
+    if (!this.affiliate) {
+      this.userService.getUserData()
+        .subscribe(res => {
+          this.affiliate = res;
+          this.reload = true;
+        });
+    }
+
+    if (this.countries.length === 0) {
+
+      // setTimeout( () => {
+      //   this.countries = this.countryService.getGeoCountries();
+      // }, 2000);
+
+      if (this.countries.length === 0) {
+        this.countryService.getCountries()
+        .pipe(map(res => {
+            this.countries = res.response;
+          })).subscribe();
+      }
+    }
   }
 
 

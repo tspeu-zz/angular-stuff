@@ -5,22 +5,39 @@
    </div>
 
    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-      <app-card [title]="title">
-         <app-resume [resumeCard]="resumeCard"></app-resume>
+      <app-card [title]="resumeCard?.title" >
+         <app-resume *ngIf="resumeCard; else loadingResume"
+                     [resumeCard]="resumeCard"
+                     [dateRange]="dateRange"
+                     (onChangeDate)="onChangeDate($event)"></app-resume>
+         <ng-template #loadingResume>
+            <div class="d-flex align-items-center loading">
+               <div class="spinner-border" role="status" aria-hidden="true"></div>
+            </div>
+         </ng-template>
       </app-card>
-      <div class="box-pdf">
-         <div class="text-pdf">
+      <!--<div class="box-pdf">
+         <div class="label-pdf">
             <p><span class="typografy-color">Informe en pdf:</span> guarda tus resultados, estadísticas y
                comparativas en el siguiente enlace de descarga</p>
          </div>
          <div class="button-pdf">
             <button type="button" class="btn" (click)="downloadResumeReport()">Descargar informe</button>
          </div>
-      </div>
+      </div>-->
    </div>
    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-      <app-card [dropdownOptions]="dropdownOptions" (sendDropdownOption)="changeContentGraph($event)">
-         <app-graph [graphCard]="graphCard"></app-graph>
+      <app-card [title]="graphCard?.title">
+         <app-graph  *ngIf="graphCard?.title; else loadingGraph"
+                     [graphCard]="graphCard"
+                     [countryCode]="resumeCard?.countryCode"
+                     [currencySymbol]="resumeCard?.currencySymbol"
+                     [dateRange]="dateRange"></app-graph>
+         <ng-template #loadingGraph>
+            <div class="d-flex align-items-center loading">
+               <div class="spinner-border" role="status" aria-hidden="true"></div>
+            </div>
+         </ng-template>
       </app-card>
    </div>
 </div>

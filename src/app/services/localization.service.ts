@@ -11,19 +11,10 @@ import {ClientInfo} from '../models/client-info';
 export class LocalizationService {
 
   private apiUrl = environment.courseApi + 'localization';
-  private userCountryCode: string;
 
   constructor(private http: HttpClient) { }
 
   getClientInfo(): Observable<ResponseBody<ClientInfo>> {
     return this.http.get<ResponseBody<ClientInfo>>(this.apiUrl + '/clientinfo');
-  }
-
-  getUserCountryCode(): string {
-    return this.userCountryCode;
-  }
-
-  setUserCountryCode(countryCode: string) {
-    this.userCountryCode = countryCode;
   }
 }

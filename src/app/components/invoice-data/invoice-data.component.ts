@@ -205,6 +205,7 @@ export class InvoiceDataComponent implements OnInit, OnChanges {
         postalCodeControl.setValidators([Validators.required, Validators.minLength(3)]);
     }
     postalCodeControl.updateValueAndValidity();
+    postalCodeControl.markAsTouched();
 
     this.invoiceForm.patchValue({ invoiceRegionCode: null });
   }
